@@ -417,81 +417,119 @@ function gownWarper(b){
   const mk=t=>(x,y)=>[180+(x-180)*(t?interp(t,y):1),Y(y)];
   return {B:mk(bt),A:mk(at),N:mk(null)};
 }
+const tint=(hex,amt)=>{let n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;const f=v=>Math.round(amt<0?v*(1+amt):v+(255-v)*amt);return '#'+[f(r),f(g),f(b)].map(v=>v.toString(16).padStart(2,'0')).join('');};
+const f1=v=>(+v).toFixed(1);
+function smooth(p){let d='';for(let i=1;i<p.length-1;i++){const a=p[i],b=p[i+1];d+=` Q ${f1(a[0])} ${f1(a[1])} ${f1((a[0]+b[0])/2)} ${f1((a[1]+b[1])/2)}`;}const l=p[p.length-1];return d+` L ${f1(l[0])} ${f1(l[1])}`;}
+function limb(outer,inner,y0,y1,grow,side){
+  const cut=(a,y)=>{for(let i=1;i<a.length;i++){if(a[i][1]>=y||i===a.length-1){const p=a[i-1],q=a[i],t=(y-p[1])/(q[1]-p[1]);return [p[0]+(q[0]-p[0])*t,y];}}};
+  const seg=a=>{const r=[cut(a,y0)];a.forEach(p=>{if(p[1]>y0&&p[1]<y1)r.push(p);});r.push(cut(a,y1));return r;};
+  const o=seg(outer).map(p=>[p[0]+side*grow,p[1]]), n=seg(inner).map(p=>[p[0]-side*grow,p[1]]).reverse();
+  return `M ${f1(o[0][0])} ${f1(o[0][1])}${smooth(o)} L ${f1(n[0][0])} ${f1(n[0][1])}${smooth(n)} Z`;
+}
+const mirD=d=>wd(d,(x,y)=>[m(x),y]);
+const HAIR='#2A1B14', HAIR_HI='#5A3B2B';
+
 function renderGown(s,p){
-  const sh=SHADES[s.shade], skin=SKINS[s.skin], sil=SIL[s.silhouette], fab=FAB[s.fabric], det=new Set(s.details);
+  const sh=SHADES[s.shade], skin=SKINS[s.skin], skinD=tint(skin,-.2), sil=SIL[s.silhouette], fab=FAB[s.fabric], det=new Set(s.details);
   const bt=BODY[s.body]||BODY.balanced, W=gownWarper(bt), out=[]; let mode='raw';
   const o={push:str=>out.push(mode==='raw'?str:ws(str,W[mode]))};
+  const hemY=t=>(1-t)*(1-t)*500+2*(1-t)*t*sil.b+t*t*500, hemX=t=>sil.L+(sil.R-sil.L)*t;
   o.push(`<svg viewBox="0 0 380 545" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${sh.label} ${gLab('silhouette',s.silhouette).toLowerCase()} gown"><defs>
-   <pattern id="${p}lace" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.3" fill="none" stroke="${sh.line}" stroke-width=".7"/><circle cx="0" cy="0" r="1" fill="${sh.line}"/><circle cx="8" cy="8" r="1" fill="${sh.line}"/><circle cx="0" cy="8" r="1" fill="${sh.line}"/><circle cx="8" cy="0" r="1" fill="${sh.line}"/></pattern>
-   <pattern id="${p}beads" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".95" fill="${GOLD}"/><circle cx="6.5" cy="6.5" r=".8" fill="#ffffff"/></pattern>
-   <pattern id="${p}tulle" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r=".5" fill="${sh.line}" opacity=".6"/></pattern>
+   <pattern id="${p}lace" width="11" height="11" patternUnits="userSpaceOnUse"><g fill="none" stroke="${sh.line}" stroke-width=".55"><circle cx="5.5" cy="5.5" r="2.1"/><circle cx="0" cy="0" r="1.3"/><circle cx="11" cy="0" r="1.3"/><circle cx="0" cy="11" r="1.3"/><circle cx="11" cy="11" r="1.3"/></g><g fill="${sh.line}"><circle cx="5.5" cy="5.5" r=".6"/><circle cx="5.5" cy="1.2" r=".45"/><circle cx="5.5" cy="9.8" r=".45"/><circle cx="1.2" cy="5.5" r=".45"/><circle cx="9.8" cy="5.5" r=".45"/></g></pattern>
+   <pattern id="${p}beads" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".9" fill="${GOLD}"/><circle cx="6.5" cy="6" r=".7" fill="#ffffff"/><circle cx="7" cy="1.5" r=".4" fill="#ffffff"/></pattern>
+   <pattern id="${p}tulle" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r=".45" fill="${sh.line}" opacity=".5"/></pattern>
    <linearGradient id="${p}fg" gradientUnits="userSpaceOnUse" x1="0" y1="170" x2="0" y2="430"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
    <mask id="${p}fade"><rect x="0" y="0" width="380" height="545" fill="url(#${p}fg)"/></mask>
+   <linearGradient id="${p}sx" gradientUnits="userSpaceOnUse" x1="${sil.L-10}" y1="0" x2="${sil.R+10}" y2="0"><stop offset="0" stop-color="${sh.shade}"/><stop offset=".3" stop-color="${tint(sh.fill,.25)}"/><stop offset=".55" stop-color="${sh.fill}"/><stop offset="1" stop-color="${sh.shade}"/></linearGradient>
+   <linearGradient id="${p}bx" gradientUnits="userSpaceOnUse" x1="140" y1="0" x2="222" y2="0"><stop offset="0" stop-color="${sh.shade}"/><stop offset=".35" stop-color="${tint(sh.fill,.3)}"/><stop offset=".6" stop-color="${sh.fill}"/><stop offset="1" stop-color="${sh.shade}"/></linearGradient>
+   <linearGradient id="${p}kx" gradientUnits="userSpaceOnUse" x1="140" y1="0" x2="222" y2="0"><stop offset="0" stop-color="${skinD}"/><stop offset=".35" stop-color="${skin}"/><stop offset=".7" stop-color="${skin}"/><stop offset="1" stop-color="${skinD}"/></linearGradient>
    <clipPath id="${p}skirt"><path d="${wd(sil.d,W.B)}"/></clipPath>
   </defs>`);
   mode='N';
-  const V={fingertip:{y:245,w:62,e:0},chapel:{y:470,w:100,e:20},cathedral:{y:524,w:112,e:70}}[s.veil];
+  const V={fingertip:{y:245,w:56,e:0},chapel:{y:470,w:92,e:20},cathedral:{y:524,w:104,e:70}}[s.veil];
   if(V){
     const bx=180+V.w+V.e, by=V.y-4+(V.e?8:0);
-    o.push(`<path d="M168 40 C130 70 ${180-V.w} ${V.y-90} ${180-V.w} ${V.y} Q ${180+V.e/2} ${V.y+14} ${bx} ${by} C ${180+V.w} ${V.y-90} 230 70 192 40 Z" fill="#ffffff" fill-opacity=".3" stroke="${sh.line}" stroke-opacity=".55" stroke-width=".8"/>`);
-    if(det.has('kasavu')) o.push(`<path d="M${180-V.w} ${V.y} Q ${180+V.e/2} ${V.y+14} ${bx} ${by}" fill="none" stroke="${GOLD}" stroke-width="2.4"/>`);
+    o.push(`<path d="M170 36 C138 70 ${180-V.w} ${V.y-100} ${180-V.w} ${V.y} Q ${180+V.e/2} ${V.y+14} ${bx} ${by} C ${180+V.w} ${V.y-100} 222 70 190 36 Z" fill="#FFFFFF" fill-opacity=".06" stroke="#FFFFFF" stroke-opacity=".4" stroke-width=".7"/>`);
+    [-.6,-.2,.25,.65].forEach(k=>o.push(`<path d="M${180+k*8} 38 Q ${180+k*V.w*.6} ${V.y*.55} ${180+k*V.w+(k>0?V.e*.6:0)} ${V.y+(k>0?V.e*.08:0)}" fill="none" stroke="#FFFFFF" stroke-opacity=".16" stroke-width=".9"/>`));
+    if(det.has('kasavu')) o.push(`<path d="M${180-V.w} ${V.y} Q ${180+V.e/2} ${V.y+14} ${bx} ${by}" fill="none" stroke="${GOLD}" stroke-width="2.2"/>`);
   }
   mode='B';
   const T={sweep:20,chapel:48,cathedral:80}[s.train];
-  if(T) o.push(`<path d="M${sil.R-40} 360 Q ${sil.R+T*.5} 470 ${sil.R+T} 518 Q 180 534 ${sil.L+10} 508 Z" fill="${sh.shade}" stroke="${sh.line}" stroke-width=".8"/>`+(det.has('kasavu')?`<path d="M${sil.R+T} 518 Q 180 534 ${sil.L+10} 508" fill="none" stroke="${GOLD}" stroke-width="3"/>`:''));
-  o.push(`<circle cx="180" cy="31" r="9" fill="#2B1D16"/>
-   <path d="M172 86 L188 86 Q196 94 216 97 Q222 100 220 112 L206 182 L154 182 L140 112 Q138 100 144 97 Q164 94 172 86 Z" fill="${skin}"/>
-   <path d="M172 64 L188 64 L188 92 L172 92 Z" fill="${skin}"/>
-   <circle cx="180" cy="50" r="18" fill="${skin}"/>
-   <path d="M162 50 Q161 30 180 30 Q199 30 198 50 Q194 39 180 38 Q166 39 162 50 Z" fill="#2B1D16"/>`);
-  if(fab.layer) o.push(`<path d="${sil.d}" transform="translate(180 0) scale(1.06 1) translate(-180 0)" fill="${sh.fill}" fill-opacity=".55" stroke="${sh.line}" stroke-opacity=".45" stroke-width=".8"/>`);
-  o.push(`<path d="${sil.d}" fill="${sh.fill}" stroke="${sh.line}" stroke-width="1"/>`);
+  if(T){const td=`M${sil.R-40} 360 Q ${sil.R+T*.5} 470 ${sil.R+T} 518 Q 180 534 ${sil.L+10} 508 Z`;
+    o.push(`<path d="${td}" fill="${sh.shade}" stroke="${sh.line}" stroke-width=".7"/><path d="M${sil.R-20} 420 Q ${sil.R+T*.4} 480 ${sil.R+T*.7} 520" fill="none" stroke="${sh.line}" stroke-opacity=".45" stroke-width="1"/>`+(det.has('kasavu')?`<path d="M${sil.R+T} 518 Q 180 534 ${sil.L+10} 508" fill="none" stroke="${GOLD}" stroke-width="3"/>`:''));}
+  // body: hair bun behind, torso, neck, head
+  o.push(`<ellipse cx="183" cy="30" rx="11" ry="8.5" fill="${HAIR}"/>
+   <path d="M172 86 L188 86 Q196 94 216 97 Q222 100 220 112 L206 182 L154 182 L140 112 Q138 100 144 97 Q164 94 172 86 Z" fill="url(#${p}kx)"/>
+   <path d="M168 97 Q160 96.5 152 99.5 M192 97 Q200 96.5 208 99.5" fill="none" stroke="${skinD}" stroke-width=".8" stroke-opacity=".7"/>
+   <path d="M173 60 L187 60 Q188 74 189 87 Q180 91 171 87 Q172 74 173 60 Z" fill="${skin}"/>
+   <path d="M174 62 Q180 69 186 62 L186.5 68 Q180 74 173.5 68 Z" fill="${skinD}" fill-opacity=".55"/>
+   <ellipse cx="180" cy="48" rx="13.5" ry="16.5" fill="${skin}"/>
+   <path d="M187 35 Q196.5 48 186.5 63 Q192 48 187 35 Z" fill="${skinD}" fill-opacity=".45"/>
+   <path d="M172.6 44.6 Q175.6 43 178.6 44.3 M181.4 44.3 Q184.4 43 187.4 44.6" fill="none" stroke="${HAIR}" stroke-width=".9" stroke-linecap="round"/>
+   <path d="M173.6 48.4 Q176 50 178.2 48.4 M181.8 48.4 Q184 50 186.4 48.4" fill="none" stroke="#2A1B14" stroke-width="1" stroke-linecap="round"/>
+   <path d="M180.4 50.5 Q182 54 179.6 54.6" fill="none" stroke="${skinD}" stroke-width=".7"/>
+   <path d="M176.8 57.6 Q180 56 183.2 57.6 Q180 60.4 176.8 57.6 Z" fill="#B0605A"/>
+   <path d="M166.5 50 C164 34 172 29.5 181 29.5 C191 29.5 196.5 36 194 50 C192 41 187 37 180 37.5 C174 38 170 42 166.5 50 Z" fill="${HAIR}"/>
+   <path d="M167 46 C169 39 175 36 182 36.8 C175 39 171.5 43 169.5 51 Z" fill="${HAIR_HI}" fill-opacity=".8"/>
+   <path d="M172 33 Q181 30 189 34" fill="none" stroke="${HAIR_HI}" stroke-width="1.2" stroke-opacity=".7"/>
+   <circle cx="167.2" cy="56" r="1.3" fill="${GOLD}"/><circle cx="192.8" cy="56" r="1.3" fill="${GOLD}"/>`);
+  // skirt
+  if(fab.layer) o.push(`<path d="${sil.d}" transform="translate(180 0) scale(1.06 1) translate(-180 0)" fill="${sh.fill}" fill-opacity=".22" stroke="${sh.fill}" stroke-opacity=".5" stroke-width=".7"/>`);
+  o.push(`<path d="${sil.d}" fill="url(#${p}sx)" stroke="${sh.line}" stroke-width=".9"/>`);
   o.push(`<g clip-path="url(#${p}skirt)">`);
-  for(let i=1;i<=fab.folds;i++){const f=i/(fab.folds+1);const x0=166+28*f,x1=sil.L+(sil.R-sil.L)*f;
-    o.push(`<path d="M${x0} ${sil.fy} Q ${(x0+x1)/2+(f-.5)*12} ${(sil.fy+500)/2} ${x1} 506" fill="none" stroke="${sh.line}" stroke-opacity=".45" stroke-width=".9"/>`);}
-  if(fab.sheen) o.push(`<path d="M170 192 C160 300 148 400 136 506" fill="none" stroke="#fff" stroke-opacity="${fab.sheen}" stroke-width="12" stroke-linecap="round"/>`);
+  for(let i=1;i<=fab.folds;i++){const f=i/(fab.folds+1);const x0=166+28*f,x1=sil.L+(sil.R-sil.L)*f,cx=(x0+x1)/2+(f-.5)*14,cy=(sil.fy+500)/2;
+    o.push(`<path d="M${x0} ${sil.fy} Q ${cx} ${cy} ${x1} 510" fill="none" stroke="${sh.line}" stroke-opacity=".38" stroke-width="2"/><path d="M${x0+2.5} ${sil.fy+8} Q ${cx+3} ${cy} ${x1+4} 510" fill="none" stroke="#FFFFFF" stroke-opacity=".28" stroke-width="1"/>`);}
+  if(fab.sheen) o.push(`<path d="M168 192 C158 300 146 400 132 510" fill="none" stroke="#fff" stroke-opacity="${fab.sheen*.6}" stroke-width="16" stroke-linecap="round"/><path d="M168 200 C159 300 148 400 136 510" fill="none" stroke="#fff" stroke-opacity="${fab.sheen*.8}" stroke-width="4" stroke-linecap="round"/>`);
   if(fab.dots) o.push(`<rect x="0" y="180" width="380" height="340" fill="url(#${p}tulle)"/>`);
-  if(det.has('lace')) o.push(`<rect x="0" y="430" width="380" height="90" fill="url(#${p}lace)" opacity=".85"/><path d="M0 430 L380 430" stroke="${sh.line}" stroke-width=".6" stroke-dasharray="2 3"/>`);
+  if(det.has('lace')){let sc='M40 438';for(let x=40;x<340;x+=8)sc+=` Q ${x+4} 444 ${x+8} 438`;
+    let hm='';for(let i=0;i<40;i++){const t0=i/40,t1=(i+1)/40,tm=(t0+t1)/2;hm+=(i?'':`M${f1(hemX(t0))} ${f1(hemY(t0)-1)}`)+` Q ${f1(hemX(tm))} ${f1(hemY(tm)+5)} ${f1(hemX(t1))} ${f1(hemY(t1)-1)}`;}
+    o.push(`<rect x="0" y="440" width="380" height="90" fill="url(#${p}lace)" opacity=".8"/><path d="${sc}" fill="none" stroke="${sh.line}" stroke-width=".7" stroke-opacity=".8"/>`);
+    o.push(`</g><path d="${hm}" fill="none" stroke="${sh.line}" stroke-width=".8"/><g clip-path="url(#${p}skirt)">`);}
   if(det.has('beading')) o.push(`<rect x="0" y="178" width="380" height="260" fill="url(#${p}beads)" mask="url(#${p}fade)"/>`);
   if(det.has('kasavu')) o.push(`<path d="M${sil.L} 494 Q 180 ${sil.b-6} ${sil.R} 494" fill="none" stroke="${GOLD}" stroke-width="6"/><path d="M${sil.L} 485 Q 180 ${sil.b-15} ${sil.R} 485" fill="none" stroke="${GOLD}" stroke-width="1.3"/>`);
   o.push(`</g>`);
   if(det.has('floral')) [[198,198],[190,228],[204,256],[176,284],[188,320],[166,352],[180,392],[162,430],[186,462]].forEach(([x,y],i)=>{
-    const r=i%3?3.2:4.2; let f='';for(let k=0;k<5;k++){const a=k*1.2566+i;f+=`<circle cx="${(x+Math.cos(a)*r).toFixed(1)}" cy="${(y+Math.sin(a)*r).toFixed(1)}" r="${r*.75}" fill="${sh.fill}" stroke="${sh.line}" stroke-width=".6"/>`;}
+    const r=i%3?3.2:4.2; let f='';for(let k=0;k<5;k++){const a=k*1.2566+i;f+=`<circle cx="${(x+Math.cos(a)*r).toFixed(1)}" cy="${(y+Math.sin(a)*r).toFixed(1)}" r="${r*.75}" fill="${tint(sh.fill,.4)}" stroke="${sh.line}" stroke-width=".6"/>`;}
     o.push(f+`<circle cx="${x}" cy="${y}" r="1.4" fill="${GOLD}"/>`);});
+  // arms
   mode='A';
-  const arm=[[140,104],[130,165],[126,228]];
-  o.push(`<path d="${pts(arm)}" fill="none" stroke="${skin}" stroke-width="${13*bt.sh}" stroke-linecap="round" stroke-linejoin="round"/><path d="${pts(mir(arm))}" fill="none" stroke="${skin}" stroke-width="${13*bt.sh}" stroke-linecap="round" stroke-linejoin="round"/>`);
+  const AO=[[141,99],[136,122],[133,145],[131,166],[129.5,195],[128,222]], AI=[[148,118],[145,138],[140,162],[137,192],[134.5,222]];
+  const hand='M127.8 220 Q125.4 233 128.4 243 Q131.4 248.5 134.6 242 Q137 232 134.8 220 Z';
+  o.push(`<path d="${limb(AO,AI,99,224,0,1)}" fill="${skin}"/><path d="${limb(mir(AO),mir(AI),99,224,0,-1)}" fill="${skin}"/>`);
+  o.push(`<path d="${hand}" fill="${skin}"/><path d="${mirD(hand)}" fill="${skin}"/>`);
+  o.push(`<path d="M134 162 Q136.5 165 138.5 162" fill="none" stroke="${skinD}" stroke-width=".7" stroke-opacity=".6"/><path d="M226 162 Q223.5 165 221.5 162" fill="none" stroke="${skinD}" stroke-width=".7" stroke-opacity=".6"/>`);
+  // bodice
   mode='B';
   const bd=BODICE[s.neckline];
-  o.push(`<path d="${bd}" fill="${sh.fill}" stroke="${sh.line}" stroke-width="1"/>`);
+  o.push(`<path d="${bd}" fill="url(#${p}bx)" stroke="${sh.line}" stroke-width=".9"/><path d="M166 128 Q164 155 167.5 180 M194 128 Q196 155 192.5 180" fill="none" stroke="${sh.line}" stroke-width=".7" stroke-opacity=".45"/>`);
   if(det.has('lace')) o.push(`<path d="${bd}" fill="url(#${p}lace)" opacity=".8"/>`);
   if(det.has('beading')) o.push(`<path d="${bd}" fill="url(#${p}beads)" opacity=".9"/>`);
   if(s.neckline==='illusion'){const il='M172 82 L188 82 Q196 92 216 97 Q221 104 214 116 L200 104 Q188 104 180 118 Q172 104 160 104 L146 116 Q139 104 144 97 Q164 92 172 82 Z';
-    o.push(`<path d="${il}" fill="${sh.fill}" fill-opacity=".38" stroke="${sh.line}" stroke-opacity=".6" stroke-width=".7"/><path d="${il}" fill="url(#${p}lace)" opacity=".7"/><path d="M172 82 L188 82" stroke="${sh.line}" stroke-width="1.6"/>`);}
+    o.push(`<path d="${il}" fill="${sh.fill}" fill-opacity=".3" stroke="${sh.line}" stroke-opacity=".6" stroke-width=".6"/><path d="${il}" fill="url(#${p}lace)" opacity=".75"/><path d="M172 82 L188 82" stroke="${sh.line}" stroke-width="1.4"/>`);}
   if(s.sleeves!=='none'){
     mode='A';
-    const start=s.neckline==='offshoulder'?[137,114]:[140,103];
-    const ends={cap:[[136,126]],short:[[133,146]],long:[[130,165],[126.4,221]],bolero:[[130,165],[126.4,221]]}[s.sleeves];
-    const a=[start,...ends]; const sheer=(s.sleeves==='long'||s.sleeves==='bolero');
-    [a,mir(a)].forEach(seg=>{
-      o.push(`<path d="${pts(seg)}" fill="none" stroke="${sh.fill}" stroke-opacity="${sheer?.55:1}" stroke-width="${17*bt.sh}" stroke-linecap="round" stroke-linejoin="round"/>`);
-      if(sheer||det.has('lace')) o.push(`<path d="${pts(seg)}" fill="none" stroke="url(#${p}lace)" stroke-width="${17*bt.sh}" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>`);
-      if(det.has('kasavu')){const e=seg[seg.length-1],q=seg[seg.length-2];const dx=e[0]-q[0],dy=e[1]-q[1],l=Math.hypot(dx,dy);
-        o.push(`<path d="M${(e[0]-dx/l*2).toFixed(1)} ${(e[1]-dy/l*2).toFixed(1)} L${(e[0]+dx/l*2).toFixed(1)} ${(e[1]+dy/l*2).toFixed(1)}" stroke="${GOLD}" stroke-width="${18*bt.sh}" stroke-linecap="butt"/>`);}
+    const y0=s.neckline==='offshoulder'?110:97, y1={cap:124,short:150,long:222,bolero:222}[s.sleeves];
+    const sheer=(s.sleeves==='long'||s.sleeves==='bolero');
+    [[AO,AI,1],[mir(AO),mir(AI),-1]].forEach(([oo,ii,sd])=>{
+      const d=limb(oo,ii,y0,y1,1.8,sd);
+      o.push(`<path d="${d}" fill="${sh.fill}" fill-opacity="${sheer?.42:1}" stroke="${sh.line}" stroke-width=".6" stroke-opacity=".7"/>`);
+      if(sheer||det.has('lace')) o.push(`<path d="${d}" fill="url(#${p}lace)" opacity=".85"/>`);
+      if(det.has('kasavu')) o.push(`<path d="${limb(oo,ii,y1-4.5,y1,1.9,sd)}" fill="${GOLD}"/>`);
     });
     mode='B';
     if(s.sleeves==='bolero'){const bp=[[172,84],[148,95],[143,104],[152,150],[162,128],[167,108]];
-      [bp,mir(bp)].forEach(q=>o.push(`<path d="${pts(q)} Z" fill="${sh.fill}" fill-opacity=".5" stroke="${sh.line}" stroke-width=".7"/><path d="${pts(q)} Z" fill="url(#${p}lace)" opacity=".75"/>`));}
+      [bp,mir(bp)].forEach(q=>o.push(`<path d="${pts(q)} Z" fill="${sh.fill}" fill-opacity=".45" stroke="${sh.line}" stroke-width=".6"/><path d="${pts(q)} Z" fill="url(#${p}lace)" opacity=".8"/>`));}
   }
   mode='B';
   const beltD='M157 172 Q180 175 203 172 L202 185 Q180 188 158 185 Z';
   if(s.belt==='sash') o.push(`<path d="${beltD}" fill="${sh.shade}" stroke="${sh.line}" stroke-width=".8"/><path d="M196 184 L204 214 L198 212 L192 186" fill="${sh.shade}" stroke="${sh.line}" stroke-width=".6"/>`);
   if(s.belt==='kasavu') o.push(`<path d="${beltD}" fill="${GOLD}"/><path d="M158 178.5 Q180 181.5 202 178.5" fill="none" stroke="${GOLD_D}" stroke-width="1"/>`);
   if(s.belt==='beaded'){let b='';for(let x=160;x<=200;x+=4)b+=`<circle cx="${x}" cy="${178.5+((x-180)/20)**2*-1.5+1.5}" r="1.9" fill="${x%8?'#ffffff':GOLD}" stroke="${sh.line}" stroke-width=".4"/>`;o.push(b);}
-  if(V) o.push(`<path d="M168 35 Q180 27 192 35" fill="none" stroke="${GOLD}" stroke-width="2.4" stroke-linecap="round"/>`);
+  if(V) o.push(`<path d="M171 33 Q180 26.5 189 33" fill="none" stroke="${GOLD}" stroke-width="2.2" stroke-linecap="round"/>`);
   mode='raw';o.push('</svg>');
   return out.join('');
 }
+
 const gLab=(k,id)=>GOWN_GROUPS.find(g=>g.key===k).opts.find(o=>o.id===id)?.label||id;
 
 const PD={
@@ -592,67 +630,77 @@ function suitWarper(b){
 }
 function accentColor(id){return id==='gown'?SHADES[(window.GOWN?GOWN.get().shade:'ivory')].fill:ACCENT[id].color;}
 function renderSuit(s,p){
-  const c=SUITC[s.color], skin=SKINS[s.skin], bl=BUILD[s.build]||BUILD.regular, W=suitWarper(bl);
+  const c=SUITC[s.color], skin=SKINS[s.skin], skinD=tint(skin,-.2), bl=BUILD[s.build]||BUILD.regular, W=suitWarper(bl);
   const out=[]; let mode='raw'; const o={push:str=>out.push(mode==='raw'?str:ws(str,W[mode]))};
   const bg=s.style==='bandhgala', hem=bg?302:282, det=new Set(s.details);
   const tr=s.trousers==='match'?c:SUITC[s.trousers], acc=accentColor(s.accent);
   const vy=s.buttons==='db'?140:s.buttons==='two'?150:168;
-  const jk=`M172 86 L150 92 Q136 95 130 102 L128 122 L137 200 L135 ${hem} L225 ${hem} L223 200 L232 122 L230 102 Q224 95 210 92 L188 86 Z`;
+  const hi=c.light?tint(c.fill,.25):tint(c.fill,.12);
+  const jk=`M172 84 L152 90 Q137 94 132 104 L130.5 124 Q133 160 140 196 Q139 240 136 ${hem} L224 ${hem} Q221 240 220 196 Q227 160 229.5 124 L228 104 Q223 94 208 90 L188 84 Z`;
   const open=`M172 86 L188 86 L180 ${vy} Z`;
   const btnFill=det.has('goldbuttons')?GOLD:c.line;
   o.push(`<svg viewBox="0 0 380 545" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${c.label} ${sLab('style',s.style).toLowerCase()}"><defs>
    <pattern id="${p}linen" width="6" height="4" patternUnits="userSpaceOnUse"><path d="M0 1 L4 1" stroke="${c.light?'#000':'#fff'}" stroke-opacity=".08" stroke-width=".7"/><path d="M2 3 L6 3" stroke="${c.light?'#000':'#fff'}" stroke-opacity=".06" stroke-width=".6"/></pattern>
    <pattern id="${p}broc" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M6 1 L11 6 L6 11 L1 6 Z" fill="none" stroke="${c.light?c.line:GOLD}" stroke-opacity=".35" stroke-width=".6"/><circle cx="6" cy="6" r=".9" fill="${GOLD}" fill-opacity=".6"/></pattern>
+   <linearGradient id="${p}jx" gradientUnits="userSpaceOnUse" x1="128" y1="0" x2="232" y2="0"><stop offset="0" stop-color="${c.shade}"/><stop offset=".32" stop-color="${hi}"/><stop offset=".6" stop-color="${c.fill}"/><stop offset="1" stop-color="${c.shade}"/></linearGradient>
+   <linearGradient id="${p}tx" gradientUnits="userSpaceOnUse" x1="136" y1="0" x2="224" y2="0"><stop offset="0" stop-color="${tr.shade}"/><stop offset=".3" stop-color="${tr.light?tint(tr.fill,.2):tint(tr.fill,.1)}"/><stop offset=".55" stop-color="${tr.fill}"/><stop offset="1" stop-color="${tr.shade}"/></linearGradient>
    <clipPath id="${p}jk"><path d="${wd(jk,W.B)}"/></clipPath>
    <clipPath id="${p}op"><path d="${wd(open,W.B)}"/></clipPath>
   </defs>`);
   mode='B';
-  // trousers
-  const legL='M137 282 L179 282 L177 500 L149 500 Z', legR='M181 282 L223 282 L211 500 L183 500 Z';
-  o.push(`<path d="${legL}" fill="${tr.fill}" stroke="${tr.line}" stroke-width="1"/><path d="${legR}" fill="${tr.fill}" stroke="${tr.line}" stroke-width="1"/>
-   <path d="M158 292 L163 498" stroke="${tr.line}" stroke-opacity=".5" stroke-width=".8"/><path d="M202 292 L197 498" stroke="${tr.line}" stroke-opacity=".5" stroke-width=".8"/>`);
-  if(s.style==='tux') o.push(`<path d="M139 286 L150 498" stroke="#55555E" stroke-width="2.2"/><path d="M221 286 L210 498" stroke="#55555E" stroke-width="2.2"/>`);
-  // shoes
-  const shoe=s.shoes==='oxford'?{f:'#151517',l:'#000'}:s.shoes==='loafer'?{f:'#6B4226',l:'#3F2614'}:{f:'#E8D6AC',l:GOLD_D};
-  const shL='M147 497 L178 497 L179 507 Q170 513 150 512 Q139 511 140 504 Z';
-  o.push(`<path d="${shL}" fill="${shoe.f}" stroke="${shoe.l}" stroke-width=".8"/><path d="${wd(shL,(x,y)=>[m(x),y])}" fill="${shoe.f}" stroke="${shoe.l}" stroke-width=".8"/>`);
+  const legL='M138 282 L179.5 282 Q178.5 390 177 500 L147 500 Q143 390 138 282 Z';
+  o.push(`<path d="${legL}" fill="url(#${p}tx)" stroke="${tr.line}" stroke-width=".9"/><path d="${mirD(legL)}" fill="url(#${p}tx)" stroke="${tr.line}" stroke-width=".9"/>
+   <path d="M159 292 Q161 400 162.5 498" fill="none" stroke="${tr.line}" stroke-opacity=".45" stroke-width=".8"/><path d="M201 292 Q199 400 197.5 498" fill="none" stroke="${tr.line}" stroke-opacity=".45" stroke-width=".8"/>
+   <path d="M150 487 Q162 492 175 486 M210 487 Q198 492 185 486" fill="none" stroke="${tr.line}" stroke-opacity=".5" stroke-width=".8"/>`);
+  if(s.style==='tux') o.push(`<path d="M140 286 Q143 390 148.5 498" fill="none" stroke="#5A5A63" stroke-width="2"/><path d="M220 286 Q217 390 211.5 498" fill="none" stroke="#5A5A63" stroke-width="2"/>`);
+  const shoe=s.shoes==='oxford'?{f:'#141416',l:'#000',h:'#3A3A40'}:s.shoes==='loafer'?{f:'#6B4226',l:'#3F2614',h:'#8E5C38'}:{f:'#E8D6AC',l:GOLD_D,h:'#F5EAD0'};
+  const shL='M143 495 L177 495 Q180 502 178 508 L147 509 Q137 508.5 138 502 Q139 496 143 495 Z';
+  o.push(`<path d="${shL}" fill="${shoe.f}" stroke="${shoe.l}" stroke-width=".8"/><path d="${mirD(shL)}" fill="${shoe.f}" stroke="${shoe.l}" stroke-width=".8"/>
+   <path d="M142 499 Q150 496.5 158 498" fill="none" stroke="${shoe.h}" stroke-width="1.2"/><path d="M218 499 Q210 496.5 202 498" fill="none" stroke="${shoe.h}" stroke-width="1.2"/>`);
   if(s.shoes==='mojari') o.push(`<path d="M146 503 L170 503" stroke="${GOLD}" stroke-width="2" stroke-dasharray="2 2"/><path d="M214 503 L190 503" stroke="${GOLD}" stroke-width="2" stroke-dasharray="2 2"/>`);
-  // head
   mode='N';
-  o.push(`<path d="M172 62 L188 62 L188 90 L172 90 Z" fill="${skin}"/><circle cx="180" cy="47" r="19" fill="${skin}"/>
-   <path d="M161 47 Q159 26 180 26 Q201 26 199 47 Q197 35 180 35 Q163 35 161 47 Z" fill="#241812"/>`);
-  // arms
+  o.push(`<path d="M173.5 58 L186.5 58 L187.5 86 L172.5 86 Z" fill="${skin}"/><path d="M173.5 59 Q180 67 186.5 59 L187 66 Q180 72 173 66 Z" fill="${skinD}" fill-opacity=".55"/>
+   <ellipse cx="165.8" cy="47" rx="2.6" ry="4.2" fill="${skin}"/><ellipse cx="194.2" cy="47" rx="2.6" ry="4.2" fill="${skin}"/>
+   <ellipse cx="180" cy="45" rx="14.5" ry="17.5" fill="${skin}"/>
+   <path d="M187.5 31 Q198 45 187.5 61 Q193.5 45 187.5 31 Z" fill="${skinD}" fill-opacity=".45"/>
+   <path d="M171.5 41.5 Q175 39.8 178.5 41.2 M181.5 41.2 Q185 39.8 188.5 41.5" fill="none" stroke="${HAIR}" stroke-width="1.4" stroke-linecap="round"/>
+   <circle cx="175.4" cy="45.6" r=".95" fill="#2A1D17"/><circle cx="184.6" cy="45.6" r=".95" fill="#2A1D17"/>
+   <path d="M180.4 47 Q182.3 51.5 179.6 52.3" fill="none" stroke="${skinD}" stroke-width=".8"/>
+   <path d="M176.6 56.4 Q180 58 183.4 56.4" fill="none" stroke="#8A4B42" stroke-width="1.1" stroke-linecap="round"/>
+   <path d="M165.5 45 C163.5 29 172 24.5 182 24.5 C193 24.5 198 31 196 44 C194.5 37 192 34 188 33.5 C181 31.5 172 34 168 41 Q166.5 43 165.5 45 Z" fill="${HAIR}"/>
+   <path d="M166 43.5 L166.6 51 L168.2 50 L168.2 42 Z" fill="${HAIR}"/><path d="M196 43.5 L195.4 51 L193.8 50 L193.8 42 Z" fill="${HAIR}"/>
+   <path d="M171 32.5 Q177 28.6 186 29.5" fill="none" stroke="${HAIR_HI}" stroke-width="1.3" stroke-opacity=".8"/>`);
   mode='A';
-  const arm=[[134,104],[124,190],[120,262]];
-  [arm,mir(arm)].forEach(a=>{const e=a[2],h=[e[0]+(e[0]<180?-.6:.6),e[1]+12];
-    o.push(`<path d="M${e[0]} ${e[1]-2} L${(e[0]+h[0])/2} ${e[1]+5}" stroke="#FAFAF7" stroke-width="${17*bl.sh}" stroke-linecap="butt"/>`);
-    o.push(`<circle cx="${h[0]}" cy="${h[1]}" r="7.5" fill="${skin}"/>`);
-    o.push(`<path d="${pts(a)}" fill="none" stroke="${c.line}" stroke-width="${26*bl.sh}" stroke-linecap="butt" stroke-linejoin="round"/><path d="${pts(a)}" fill="none" stroke="${c.fill}" stroke-width="${24*bl.sh}" stroke-linecap="butt" stroke-linejoin="round"/>`);
+  const SO=[[133,103],[128.5,135],[125,170],[122.5,210],[120.5,258]], SI=[[145,120],[142.5,150],[139.5,190],[136.5,226],[134.5,258]];
+  const hand='M121.2 259 Q118.6 272 122.2 281.5 Q126.2 287 130.4 280.5 Q133.4 271 131.6 259 Z';
+  [[SO,SI,1,hand],[mir(SO),mir(SI),-1,mirD(hand)]].forEach(([oo,ii,sd,h])=>{
+    o.push(`<path d="${h}" fill="${skin}"/><path d="${limb(oo,ii,254,262,-.4,sd)}" fill="#FAFAF7"/>`);
+    o.push(`<path d="${limb(oo,ii,100,257,0,sd)}" fill="url(#${p}jx)" stroke="${c.line}" stroke-width=".9"/>`);
   });
-  // jacket body
+  o.push(`<path d="M126 172 Q130 175 134 171" fill="none" stroke="${c.line}" stroke-opacity=".6" stroke-width=".8"/><path d="M234 172 Q230 175 226 171" fill="none" stroke="${c.line}" stroke-opacity=".6" stroke-width=".8"/>`);
   mode='B';
-  o.push(`<path d="${jk}" fill="${c.fill}" stroke="${c.line}" stroke-width="1"/>`);
+  o.push(`<path d="${jk}" fill="url(#${p}jx)" stroke="${c.line}" stroke-width=".9"/>`);
   o.push(`<g clip-path="url(#${p}jk)">`);
   if(s.fabric==='linen') o.push(`<rect x="0" y="80" width="380" height="240" fill="url(#${p}linen)"/>`);
   if(s.fabric==='brocade') o.push(`<rect x="0" y="80" width="380" height="240" fill="url(#${p}broc)"/>`);
-  if(s.fabric==='velvet'||s.fabric==='silkcotton') o.push(`<path d="M150 110 C146 170 146 230 150 290" fill="none" stroke="#fff" stroke-opacity="${s.fabric==='velvet'?.14:.1}" stroke-width="16" stroke-linecap="round"/>`);
-  o.push(`</g>`);
+  if(s.fabric==='velvet'||s.fabric==='silkcotton') o.push(`<path d="M152 110 C148 170 148 230 152 290" fill="none" stroke="#fff" stroke-opacity="${s.fabric==='velvet'?.14:.1}" stroke-width="16" stroke-linecap="round"/>`);
+  o.push(`<path d="M150 200 Q160 205 168 200 M210 200 Q200 205 192 200" fill="none" stroke="${c.line}" stroke-opacity=".35" stroke-width=".8"/></g>`);
   if(!bg){
     if(s.style==='threepiece'){
       o.push(`<path d="${open}" fill="${c.shade}"/><path d="M172 86 L188 86 L180 124 Z" fill="#FAFAF7"/>`);
       for(let y=132;y<vy-4;y+=10) o.push(`<circle cx="180" cy="${y}" r="1.5" fill="${btnFill}"/>`);
-    } else o.push(`<path d="${open}" fill="#FAFAF7"/>`);
+    } else o.push(`<path d="${open}" fill="#FAFAF7"/><path d="M180 100 L180 ${vy}" stroke="#E2DFD8" stroke-width=".7"/>`);
     o.push(`<path d="M172 84 L165 97 L179 94 Z" fill="#FFFFFF" stroke="#D5D2CA" stroke-width=".6"/><path d="M188 84 L195 97 L181 94 Z" fill="#FFFFFF" stroke="#D5D2CA" stroke-width=".6"/>`);
-    if(s.neckwear==='tie') o.push(`<g clip-path="url(#${p}op)"><path d="M178 100 L182 100 L185 152 L180 160 L175 152 Z" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/></g><path d="M177 93 L183 93 L182 100 L178 100 Z" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/>`);
-    if(s.neckwear==='bow') o.push(`<path d="M180 95 L168 89 L168 101 Z" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/><path d="M180 95 L192 89 L192 101 Z" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/><path d="M177 92 L183 92 L183 98 L177 98 Z" fill="${acc}" stroke="rgba(0,0,0,.3)" stroke-width=".5"/>`);
+    if(s.neckwear==='tie') o.push(`<g clip-path="url(#${p}op)"><path d="M178 100 L182 100 L185 152 L180 160 L175 152 Z" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/><path d="M179 104 L181 104 L181.5 150" fill="none" stroke="#fff" stroke-opacity=".2" stroke-width="1"/></g><path d="M177 93 L183 93 L182 100 L178 100 Z" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/>`);
+    if(s.neckwear==='bow') o.push(`<path d="M180 95 Q173 88 168 89 Q166 95 168 101 Q173 102 180 95 Z" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/><path d="M180 95 Q187 88 192 89 Q194 95 192 101 Q187 102 180 95 Z" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/><path d="M177.5 92 L182.5 92 L182.5 98 L177.5 98 Z" fill="${acc}" stroke="rgba(0,0,0,.3)" stroke-width=".5"/>`);
     if(s.neckwear==='none') o.push(`<path d="M176 86 L184 86 L180 98 Z" fill="${skin}"/>`);
     const lapFill=s.style==='tux'?'#141417':c.shade;
     const lapels={notch:[[172,86],[156,95],[147,121],[155,120],[151,130],[180,vy]],peak:[[172,86],[156,95],[146,116],[138,110],[150,131],[180,vy]]};
-    let Ld, Rd;
+    let Ld,Rd;
     if(s.lapel==='shawl'){Ld=`M172 86 Q150 98 149 130 Q154 ${vy-12} 180 ${vy} Z`;Rd=`M188 86 Q210 98 211 130 Q206 ${vy-12} 180 ${vy} Z`;}
     else{Ld=pts(lapels[s.lapel])+' Z';Rd=pts(mir(lapels[s.lapel]))+' Z';}
     o.push(`<path d="${Ld}" fill="${lapFill}" stroke="${c.line}" stroke-width=".9"/><path d="${Rd}" fill="${lapFill}" stroke="${c.line}" stroke-width=".9"/>`);
-    if(s.style==='tux') o.push(`<path d="M168 92 Q156 110 158 136" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3"/><path d="M192 92 Q204 110 202 136" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3"/>`);
+    o.push(`<path d="M168 92 Q156 110 158 136" fill="none" stroke="#fff" stroke-opacity="${s.style==='tux'?.2:.12}" stroke-width="2.5"/><path d="M192 92 Q204 110 202 136" fill="none" stroke="#fff" stroke-opacity="${s.style==='tux'?.2:.12}" stroke-width="2.5"/>`);
     if(det.has('piping')) o.push(`<path d="${Ld}" fill="none" stroke="${GOLD}" stroke-width="1.6"/><path d="${Rd}" fill="none" stroke="${GOLD}" stroke-width="1.6"/>`);
     if(s.buttons==='db'){
       o.push(`<path d="M196 ${vy+4} L196 ${hem}" stroke="${c.line}" stroke-width="1"/>`);
@@ -667,7 +715,6 @@ function renderSuit(s,p){
     if(det.has('piping')) o.push(`<path d="M167 77 L193 77" stroke="${GOLD}" stroke-width="2"/><path d="M166 93 L194 93" stroke="${GOLD}" stroke-width="1.4"/><path d="M182.5 93 L182.5 ${hem}" stroke="${GOLD}" stroke-width="1.4"/>`);
     [106,132,158,184,210,236,262].forEach(y=>o.push(`<circle cx="184" cy="${y}" r="2.5" fill="${btnFill}" stroke="${c.line}" stroke-width=".5"/>`));
   }
-  // pockets
   o.push(`<path d="M141 236 L166 236 L166 243 L141 243 Z" fill="${c.fill}" stroke="${c.line}" stroke-width=".8"/><path d="M194 236 L219 236 L219 243 L194 243 Z" fill="${c.fill}" stroke="${c.line}" stroke-width=".8"/><path d="M195 133 L215 131" stroke="${c.line}" stroke-width="2"/>`);
   const sq='M196 132 L199 123 L203 129 L207 121 L211 128 L214 131 Z';
   if(s.pocket==='folded') o.push(`<path d="${sq}" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/>`);
@@ -675,11 +722,12 @@ function renderSuit(s,p){
   if(det.has('boutonniere')){const fx=bg?204:206, fy=bg?112:108; const pet=s.accent==='gown'?acc:'#FFFFFF';let f=`<path d="M${fx-1} ${fy+4} L${fx-5} ${fy+13}" stroke="#5C7A4A" stroke-width="1.8" stroke-linecap="round"/>`;
     for(let k=0;k<5;k++){const a=k*1.2566;f+=`<circle cx="${(fx+Math.cos(a)*2.8).toFixed(1)}" cy="${(fy+Math.sin(a)*2.8).toFixed(1)}" r="2.4" fill="${pet}" stroke="#B9B2A2" stroke-width=".4"/>`;}
     o.push(f+`<circle cx="${fx}" cy="${fy}" r="1.3" fill="${GOLD}"/>`);}
-  if(det.has('brooch')){let b=`<circle cx="${bg?200:202}" cy="${bg?150:150}" r="3.6" fill="${GOLD}" stroke="${GOLD_D}" stroke-width=".6"/>`;
-    for(let k=0;k<6;k++){const a=k*1.047;b+=`<circle cx="${((bg?200:202)+Math.cos(a)*6).toFixed(1)}" cy="${(150+Math.sin(a)*6).toFixed(1)}" r="1.3" fill="#FFFFFF" stroke="${GOLD_D}" stroke-width=".4"/>`;}o.push(b);}
+  if(det.has('brooch')){const bx=bg?200:202;let b=`<circle cx="${bx}" cy="150" r="3.6" fill="${GOLD}" stroke="${GOLD_D}" stroke-width=".6"/>`;
+    for(let k=0;k<6;k++){const a=k*1.047;b+=`<circle cx="${(bx+Math.cos(a)*6).toFixed(1)}" cy="${(150+Math.sin(a)*6).toFixed(1)}" r="1.3" fill="#FFFFFF" stroke="${GOLD_D}" stroke-width=".4"/>`;}o.push(b);}
   mode='raw';o.push('</svg>');
   return out.join('');
 }
+
 function suitSentence(S){
   const c=SUITC[S.color].label.toLowerCase(), bg=S.style==='bandhgala';
   const accD=S.accent==='gown'?`${PD.shade[GOWN.get().shade].replace(/ \(.*\)/,'')}, matching the gown`:ACCENT[S.accent].d;
