@@ -1,0 +1,978 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Wedding Wardrobe · Design your wedding outfits together</title>
+<meta name="description" content="Design a wedding gown and suit side by side, check they match, get typical weather for your venue and date, and take a clear brief to your designer.">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="The Wedding Wardrobe">
+<meta property="og:description" content="Design your wedding gown and suit together, with weather for your venue and date.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000'/%3E%3Cpath d='M20 56 L28 26 L24 14 L40 14 L36 26 L44 56 Z' fill='%23D8B262'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Manrope:wght@400;500;600&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+/* Single black theme by request. Layout: a small wedding-atelier site. Arched "church window" stages frame every figure; gold is the single accent; Bodoni italic for display, Manrope for everything operated. */
+:root{
+  --bg:#000000; --surface:#0A0A0A; --ink:#F2F0EE; --muted:#9E9A96; --line:#262524;
+  --stage:#121212; --gold:#D8B262; --gold-soft:#2A2212; --gold-ink:#F2DCA8; --warn:#E89C7E; --warn-soft:#2E1A15;
+  --display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --navh:58px; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);
+  margin-left:calc(-1 * max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.nav-in{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px 20px;flex-wrap:wrap;padding-block:10px}
+.brand{font-family:var(--display);font-style:italic;font-size:20px;text-decoration:none;white-space:nowrap}
+.brand b{font-weight:500;color:var(--gold)}
+.links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.links a{text-decoration:none;font-size:13.5px;font-weight:600;padding:7px 12px;border-radius:999px;color:var(--muted);white-space:nowrap}
+.links a[aria-current="page"]{color:var(--gold-ink);background:var(--gold-soft)}
+
+.wrap{max-width:1120px;margin:0 auto;padding-block:28px 56px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+h1,h2{font-family:var(--display);font-weight:400;text-wrap:balance}
+.page-head{display:flex;flex-direction:column;gap:4px;margin-bottom:20px}
+.page-head h1{font-style:italic;font-size:clamp(32px,5.5vw,48px);line-height:1.05;margin:0}
+.lede{color:var(--muted);max-width:60ch;margin:4px 0 0}
+
+/* home */
+.hero{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:center}
+.hero h1{font-style:italic;font-size:clamp(40px,8vw,80px);line-height:.98;margin:10px 0 16px;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{font-size:16.5px;max-width:46ch;margin:0 0 22px}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
+.count{display:inline-flex;align-items:baseline;gap:8px;margin-top:22px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:13.5px}
+.count strong{font-family:var(--display);font-size:22px;font-weight:500;color:var(--gold);font-variant-numeric:tabular-nums}
+section.block{margin-top:64px}
+section.block > h2{font-size:clamp(26px,4vw,34px);margin:0 0 6px}
+section.block > .lede{margin-bottom:22px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;list-style:none;padding:0;margin:0;counter-reset:s}
+.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+.steps li::before{content:counter(s);font-family:var(--display);font-style:italic;font-size:30px;color:var(--gold);display:block;line-height:1;margin-bottom:8px}
+.steps h3{margin:0 0 4px;font-size:16px}
+.steps p{margin:0;color:var(--muted);font-size:14px}
+.timeline{list-style:none;margin:0;padding:0;border-left:2px solid var(--line);margin-left:6px}
+.timeline li{position:relative;padding:0 0 18px 22px}
+.timeline li::before{content:"";position:absolute;left:-7px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--line)}
+.timeline li.next::before{border-color:var(--gold);background:var(--gold)}
+.timeline li.past{color:var(--muted)}
+.timeline .when{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.timeline li.next .when{color:var(--gold)}
+.timeline .what{font-size:15px}
+.tag{font-size:11px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--gold-soft);color:var(--gold-ink);margin-left:6px;letter-spacing:0;text-transform:none}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.notes .card h3{font-family:var(--display);font-weight:500;font-size:19px;margin:0 0 6px}
+.notes .card p{margin:0;color:var(--muted);font-size:14px}
+.notes .big{font-family:var(--display);font-size:30px;color:var(--ink);display:block;margin-bottom:2px;font-variant-numeric:tabular-nums}
+footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+
+/* stages */
+.stage-card{background:var(--stage);border-radius:50% 50% 18px 18px / 150px 150px 18px 18px;padding:18px 12px 10px;display:flex;flex-direction:column;gap:8px}
+.figure{height:36svh;min-height:230px;display:flex;justify-content:center}
+.figure svg{height:100%;width:auto;max-width:100%;display:block}
+.pair{display:flex;justify-content:center;align-items:flex-end;gap:0;height:46svh;min-height:260px}
+.pair svg{height:100%;width:auto;max-width:50%;display:block}
+.pair svg + svg{margin-left:-6%}
+.stage-meta{display:flex;align-items:center;justify-content:space-between;gap:8px 10px;flex-wrap:wrap}
+.caption{font-family:var(--display);font-size:16px;min-width:0}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* studio */
+.app{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+.stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--navh));z-index:5;background:var(--bg);padding-block:8px}
+.controls{display:flex;flex-direction:column;gap:22px;min-width:0}
+.group{transition:opacity .2s}
+.group.off{opacity:.45}
+.group h3,.mini{margin:0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.group .note{margin:3px 0 10px;font-size:13.5px;min-height:1.55em}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 13px;font-size:13.5px;display:inline-flex;align-items:center;gap:7px;transition:border-color .15s,background .15s}
+.chip:hover{border-color:var(--gold)}
+.chip.rec::after{content:"✦";color:var(--gold);font-size:11px;margin-left:-2px}
+.chip[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft);color:var(--gold-ink);font-weight:600}
+.dot{width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.18);flex:none}
+.multi-hint{font-weight:400;text-transform:none;letter-spacing:0}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 15px;font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.btn:hover{border-color:var(--gold)}
+.btn.primary{background:var(--gold);border-color:var(--gold);color:#140F08}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}
+.card > h2{font-weight:500;font-size:22px;margin:0 0 4px}
+.sub{color:var(--muted);font-size:13.5px;margin:0 0 14px}
+dl.brief{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 16px;margin:0 0 16px;font-size:14px}
+dl.brief dt{color:var(--muted)}
+dl.brief dd{margin:0;font-weight:500}
+.checks{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;font-size:13.5px}
+.check{display:flex;gap:10px;align-items:flex-start}
+.mark{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;background:var(--gold-soft);color:var(--gold-ink)}
+.mark.w{background:var(--warn-soft);color:var(--warn)}
+.pips{display:flex;gap:3px;margin-top:4px}
+.pip{width:14px;height:6px;border-radius:3px;background:var(--line)}
+.pip.on{background:var(--gold)}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--gold-soft);color:var(--gold-ink)}
+textarea.prompt{display:block;width:100%;margin:14px 0 12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#000;color:var(--ink);font:13.5px/1.6 var(--body);resize:vertical}
+.tip{color:var(--muted);font-size:12.5px;margin:10px 0 0}
+.toast{font-size:12.5px;color:var(--gold);min-height:1.2em;margin-top:8px}
+.looks{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.look{position:relative;background:var(--stage);border:1px solid var(--line);border-radius:12px;padding:6px 4px 4px}
+.look .load{border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;width:100%}
+.look svg{height:120px;width:auto}
+.look span{font-size:12px;font-weight:600;padding:2px 0}
+.look .rm{position:absolute;top:4px;right:4px;border:0;background:var(--surface);border-radius:50%;width:22px;height:22px;font-size:13px;line-height:1;color:var(--muted)}
+.empty{color:var(--muted);font-size:13.5px;margin:0}
+.profile{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px 28px}
+.field{display:flex;flex-direction:column;gap:8px;min-width:0}
+input[type=date]{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;max-width:100%;color-scheme:dark}
+.lookup{grid-column:1/-1;flex-direction:row;align-items:center;flex-wrap:wrap;gap:12px}
+.lk-status{font-size:13.5px;color:var(--muted)}
+.lk-status.err{color:var(--warn)}
+input[type=text]{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;width:100%}
+#wxcard:not(:empty){margin-top:14px}
+.wx{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.wx-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px}
+.wx-place{font-family:var(--display);font-size:24px}
+.wx-temp{font-family:var(--display);font-size:52px;line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
+.wx-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.wx-stat{border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.wx-stat span{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.wx-stat b{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+.wx-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.wx-cols h3{font-family:var(--display);font-weight:500;font-size:18px;margin:0 0 6px}
+.wx-cols ul{margin:0;padding-left:18px;color:var(--ink);font-size:14px;display:flex;flex-direction:column;gap:6px}
+.wx-foot{font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+@media (min-width:880px){.wx{grid-template-columns:minmax(0,1fr)}}
+.linkbtn{border:0;background:none;padding:0;color:var(--gold);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+@media (min-width:880px){
+  .hero{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:48px}
+  .app{grid-template-columns:minmax(320px,430px) minmax(0,1fr);gap:32px;align-items:start}
+  .stage{top:calc(env(safe-area-inset-top,0px) + var(--navh) + 16px);padding-block:0}
+  .figure{height:min(64vh,580px)}
+  .pair{height:min(62vh,560px)}
+  .app.together .stage{position:sticky}
+}
+@media (max-width:879px){.app.together .stage{position:static}}
+@media (prefers-reduced-motion:no-preference){.view:not([hidden]){animation:fade .35s ease}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav" aria-label="Site">
+  <div class="nav-in">
+    <a class="brand" href="#home">The Wedding <b>Wardrobe</b></a>
+    <div class="links">
+      <a href="#home" data-v="home">Home</a>
+      <a href="#gown" data-v="gown">Gown</a>
+      <a href="#suit" data-v="suit">Suit</a>
+      <a href="#together" data-v="together">Together</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="view" id="view-home" data-view="home">
+    <div class="wrap">
+      <div class="hero">
+        <div>
+          <span class="eyebrow">Wedding outfit studio for couples</span>
+          <h1>Two outfits, <em>one</em> celebration.</h1>
+          <p>Design a wedding gown and a suit side by side, check that they work together, then take a clear brief to your designer or turn it into photos.</p>
+          <div class="cta">
+            <a class="btn primary" href="#gown">Design the gown</a>
+            <a class="btn" href="#suit">Design the suit</a>
+            <a class="btn" href="#together">See them together</a>
+          </div>
+          <div class="count" id="count"></div>
+        </div>
+        <div class="stage-card"><div class="pair" id="home-pair"></div></div>
+      </div>
+
+      <section class="block" aria-labelledby="wedH" id="your-wedding">
+        <h2 id="wedH">Your wedding</h2>
+        <p class="lede">Tell us where and when. You get the typical weather for that place and date, local tips, a countdown and exact outfit deadlines.</p>
+        <div class="card profile">
+          <div class="field"><label class="mini" for="p-loc">Location</label><input type="text" id="p-loc" placeholder="City or venue, e.g. Lake Como, Italy" autocomplete="off"></div>
+          <div class="field"><label class="mini" for="p-date">Wedding date</label><input type="date" id="p-date"></div>
+          <div class="field"><span class="mini" id="p-venH">Venue</span><div class="chips" role="group" aria-labelledby="p-venH" id="p-ven"></div></div>
+          <div class="field"><span class="mini" id="p-timeH">Time of day</span><div class="chips" role="group" aria-labelledby="p-timeH" id="p-time"></div></div>
+          <div class="field"><span class="mini" id="p-climH">Weather type</span><div class="chips" role="group" aria-labelledby="p-climH" id="p-clim"></div></div>
+          <div class="field lookup"><button class="btn primary" type="button" id="p-go">Get weather and local info</button><span class="lk-status" id="p-status" role="status"></span></div>
+        </div>
+        <div id="wxcard"></div>
+      </section>
+
+      <section class="block" aria-labelledby="howH">
+        <h2 id="howH">How it works</h2>
+        <p class="lede">Everything you choose is saved in this browser, so you can come back and keep refining.</p>
+        <ol class="steps">
+          <li><h3>Design each outfit</h3><p>Pick body type, colour, cut, fabric and finishing details. The figure updates with every choice.</p></li>
+          <li><h3>Check they match</h3><p>The Together page puts both outfits side by side and flags clashes in colour, formality or detail.</p></li>
+          <li><h3>Take it further</h3><p>Copy a brief for your designer or tailor, or an image prompt to generate photos from your own pictures.</p></li>
+        </ol>
+      </section>
+
+      <section class="block" aria-labelledby="tlH">
+        <h2 id="tlH">Your outfit timeline</h2>
+        <p class="lede" id="tl-lede"></p>
+        <ol class="timeline" id="timeline"></ol>
+      </section>
+
+      <section class="block" aria-labelledby="kerH">
+        <h2 id="kerH">Dress for your weather</h2>
+        <p class="lede" id="wx-lede"></p>
+        <div class="notes" id="wx"></div>
+      </section>
+      <footer>The Wedding Wardrobe · Designs are saved only in this browser. Copy your brief or prompt to share it. · <a href="https://open-meteo.com/" target="_blank" rel="noopener">Weather data by Open-Meteo.com</a> (CC BY 4.0)</footer>
+    </div>
+  </section>
+
+  <section class="view" id="view-gown" data-view="gown" hidden></section>
+  <section class="view" id="view-suit" data-view="suit" hidden></section>
+
+  <section class="view" id="view-together" data-view="together" hidden>
+    <div class="wrap">
+      <header class="page-head">
+        <span class="eyebrow">Side by side</span>
+        <h1>Together</h1>
+        <p class="lede">See both outfits as a pair, check that they belong to the same celebration, and create a couple image.</p>
+      </header>
+      <div class="app together">
+        <div class="stage"><div class="stage-card"><div class="pair" id="tog-pair"></div>
+          <div class="stage-meta"><div class="caption" id="tog-caption"></div><div class="actions"><a class="btn" href="#gown">Edit gown</a><a class="btn" href="#suit">Edit suit</a></div></div></div></div>
+        <div class="controls">
+          <section class="card" aria-labelledby="matchH">
+            <h2 id="matchH">How well they match</h2>
+            <p class="sub">Checks on colour, shared details and formality.</p>
+            <div class="checks" id="tog-checks"></div>
+          </section>
+          <section class="card" aria-labelledby="cpH">
+            <h2 id="cpH">Couple image prompt</h2>
+            <p class="sub">Attach two clear, full-length photos, first the person wearing the gown and then the person wearing the suit, and paste this prompt.</p>
+            <h3 class="mini" id="tog-setH">Setting</h3>
+            <div class="chips setchips" role="group" aria-labelledby="tog-setH" style="margin-top:8px"></div>
+            <textarea class="prompt" id="tog-prompt" readonly rows="16" aria-label="Couple image prompt"></textarea>
+            <button class="btn primary" type="button" id="tog-copy">Copy prompt</button>
+            <div class="toast" id="tog-toast" role="status"></div>
+            <p class="tip">Tip: tools that accept two reference images work best. If a face changes, add “Preserve both faces from the reference photos exactly.”</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+/* ---------- shared helpers ---------- */
+const clone=o=>JSON.parse(JSON.stringify(o));
+const load=(k,f)=>{try{const v=JSON.parse(localStorage.getItem(k)||'null');return v==null?f:v;}catch(e){return f;}};
+const store=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+function interp(t,y){if(y<=t[0][0])return t[0][1];for(let i=1;i<t.length;i++){if(y<=t[i][0]){const a=t[i-1],b=t[i];return a[1]+(b[1]-a[1])*(y-a[0])/(b[0]-a[0]);}}return t[t.length-1][1];}
+const wd=(d,f)=>d.replace(/(-?\d+(?:\.\d+)?)\s+(-?\d+(?:\.\d+)?)/g,(_,x,y)=>{const r=f(+x,+y);return r[0].toFixed(1)+' '+r[1].toFixed(1);});
+const ws=(str,f)=>str.replace(/ d="([^"]*)"/g,(_,d)=>' d="'+wd(d,f)+'"').replace(/cx="(-?[\d.]+)" cy="(-?[\d.]+)"/g,(_,x,y)=>{const r=f(+x,+y);return 'cx="'+r[0].toFixed(1)+'" cy="'+r[1].toFixed(1)+'"';});
+const m=x=>360-x;
+const pts=a=>a.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ');
+const mir=a=>a.map(p=>[m(p[0]),p[1]]);
+const andList=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' and '+a[a.length-1];
+const an=w=>(/^[aeiou]/i.test(w)?'an ':'a ')+w;
+const SKINS={light:'#F0D2BA',wheatish:'#D7A77C',medium:'#B57E53',deep:'#7A4B2E'};
+const GOLD='#C49A3C', GOLD_D='#94701F';
+const skinOpts=note=>Object.entries({light:'Light',wheatish:'Wheatish',medium:'Medium',deep:'Deep'}).map(([id,label])=>({id,label,color:SKINS[id],note}));
+
+const SETTINGS={
+ church:{label:'Church aisle',d:'inside a church, standing in the aisle with candles and white flowers'},
+ garden:{label:'Garden',d:'in a lush garden with flowers, greenery and string lights'},
+ beach:{label:'Beach',d:'on a beach beside the sea'},
+ mandap:{label:'Mandap',d:'under a decorated wedding mandap with marigolds, drapes and soft lights'},
+ reception:{label:'Reception',d:'at an elegant wedding reception with fairy lights, white florals and a softly blurred background'},
+ studio:{label:'Studio',d:'against a plain, soft neutral studio backdrop'}
+};
+const TIMES={day:{label:'Daytime',p:'in soft natural daylight'},evening:{label:'Evening',p:'in warm evening light'}};
+const CLIMATES={
+ hot:{label:'Hot and humid',cold:false,lede:'Heat and humidity make breathable fabrics as important as the look.',notes:[['Fabrics that breathe','For the gown: chiffon, organza or crepe. For the suit: linen–wool, tropical wool or silk–cotton.'],['Keep layers light','Skip velvet, heavy satin and three-piece suits. A removable bolero or jacket gives flexibility.'],['Plan for the heat','A shorter train and veil are easier outdoors, and lighter colours stay cooler in the sun.']]},
+ dry:{label:'Warm and dry',cold:false,lede:'Warm, dry days call for light fabrics that still hold their shape.',notes:[['Light but structured','Organza, crepe and tropical wool hold their shape in dry heat.'],['Sun and shade','Light colours stay cooler in the sun; darker suits come into their own in the evening.'],['Outdoor ground','A sweep train or no train is easiest on grass, sand or stone.']]},
+ mild:{label:'Mild',cold:false,lede:'Mild weather leaves you free to choose almost any fabric.',notes:[['Almost anything works','Most fabrics are comfortable. Choose by look and how formal the day is.'],['Bring a layer','A bolero, shawl or waistcoat helps if the evening cools down.'],['Mix textures','Tulle, lace and satin all photograph beautifully in soft light.']]},
+ cold:{label:'Cold',cold:true,lede:'In cold weather, richer fabrics and covered styles keep you comfortable.',notes:[['Rich fabrics','Satin, brocade and velvet keep you warm and look luxurious.'],['Cover up beautifully','Long lace sleeves or a wrap for the gown; a three-piece or velvet jacket for the suit.'],['Mind the ground','A long train can meet wet ground outdoors, so plan a bustle.']]}
+};
+let PROF=Object.assign({date:'',time:'evening',climate:'mild',location:'',venue:'mixed',wx:null},load('wedding-profile',{}));
+const VENUES={indoor:'Indoor',outdoor:'Outdoor',mixed:'Indoor and outdoor'};if(!VENUES[PROF.venue])PROF.venue='mixed';
+if(!TIMES[PROF.time])PROF.time='evening'; if(!CLIMATES[PROF.climate])PROF.climate='mild';
+const weddingDate=()=>{if(!PROF.date)return null;const [y,mo,d]=PROF.date.split('-').map(Number);const t=new Date(y,mo-1,d);return isNaN(t)?null:t;};
+const fmtDate=d=>d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+function profileLine(){const d=weddingDate();return `${TIMES[PROF.time].label.toLowerCase()} wedding${placeName()?', '+placeName():''}${d?', '+fmtDate(d):''}`;}
+const placeName=()=>(PROF.wx&&PROF.wx.place)||PROF.location.trim();
+const settingLine=()=>SETTINGS[SET].d+(SET!=='studio'&&placeName()?' in '+placeName():'')+(SET==='studio'?', with even, flattering light':', '+TIMES[PROF.time].p);
+let SET=load('wedding-setting',null)||(load('gown-current',{}).setting)||'church';
+if(!SETTINGS[SET])SET='church';
+
+/* ---------- gown data ---------- */
+const SHADES={
+  white:{label:'Pure white',fill:'#FFFFFF',shade:'#E2E5EB',line:'#AEB4BF',note:'Crisp and bright with a cool undertone. Can look stark under warm lights.'},
+  diamond:{label:'Diamond white',fill:'#FBFAF6',shade:'#E7E3D8',line:'#BDB6A6',note:'Softer than pure white but still bright.'},
+  offwhite:{label:'Off-white',fill:'#F7F2E7',shade:'#E4DAC5',line:'#B8AB90',note:'The natural tone of silk. Flatters most skin tones.'},
+  ivory:{label:'Ivory',fill:'#F4EBD5',shade:'#DFD0AC',line:'#B19F74',note:'Warm cream that glows in candle and string light. The safest all-rounder.'},
+  champagne:{label:'Champagne',fill:'#EBD6B3',shade:'#D2B78A',line:'#A28860',note:'Golden beige. Beautiful on warm and olive skin, and with gold details.'},
+  blush:{label:'Blush',fill:'#F3D9D0',shade:'#DDBAAD',line:'#B08A80',note:'A hint of pink. Romantic and a little unconventional.'}
+};
+const BODY={
+ balanced:{label:'Balanced',sh:1,bu:1,wa:1,hi:1,rec:{silhouette:['aline','fitflare'],neckline:['vneck','sweetheart']},note:'Even proportions. Almost any style works; an A-line or fit and flare keeps it effortless.'},
+ hourglass:{label:'Hourglass',sh:1.05,bu:1.08,wa:.9,hi:1.08,rec:{silhouette:['mermaid','fitflare','aline'],neckline:['sweetheart','vneck','offshoulder']},note:'Defined waist with balanced bust and hips. Fitted styles that follow the curves look stunning.'},
+ pear:{label:'Pear',sh:.95,bu:.97,wa:.97,hi:1.17,rec:{silhouette:['aline','ball'],neckline:['offshoulder','square','sweetheart']},note:'Hips wider than shoulders. Draw the eye up with a detailed neckline and let an A-line skirt skim the hips.'},
+ apple:{label:'Apple',sh:1.04,bu:1.1,wa:1.18,hi:1.04,rec:{silhouette:['aline','ball'],neckline:['vneck','illusion']},note:'Fuller through the middle. A V-neck and a structured bodice flaring into an A-line create a defined shape.'},
+ rectangle:{label:'Rectangle',sh:1,bu:.98,wa:1.08,hi:.98,rec:{silhouette:['ball','aline','fitflare'],neckline:['sweetheart','offshoulder']},note:'Straight, athletic frame. A belt or sash plus a fuller skirt adds curves.'},
+ inverted:{label:'Inverted triangle',sh:1.14,bu:1.08,wa:1,hi:.94,rec:{silhouette:['ball','aline'],neckline:['vneck','illusion']},note:'Shoulders broader than hips. A V-neck softens the shoulders and a full skirt balances them.'},
+ plus:{label:'Curvy plus-size',sh:1.14,bu:1.2,wa:1.18,hi:1.24,rec:{silhouette:['aline','fitflare','ball'],neckline:['vneck','sweetheart','illusion']},note:'Fuller curves throughout. Structured bodices, V-necks and flowing A-lines are comfortable and flattering.'},
+ petite:{label:'Petite',sh:.94,bu:.95,wa:.94,hi:.95,petite:true,rec:{silhouette:['sheath','aline','fitflare'],neckline:['vneck','illusion']},note:'Shorter frame. Clean lines, a V-neck and less volume lengthen the figure; skip a huge ball gown.'}
+};
+const GOWN_GROUPS=[
+ {key:'body',label:'Body type',opts:Object.entries(BODY).map(([id,v])=>({id,label:v.label,note:v.note}))},
+ {key:'shade',label:'Shade',opts:Object.entries(SHADES).map(([id,v])=>({id,label:v.label,color:v.fill,note:v.note}))},
+ {key:'silhouette',label:'Silhouette',opts:[
+  {id:'aline',label:'A-line',note:'Fitted at the waist, flaring gently to the floor. Flatters almost everyone and stays comfortable in the heat.'},
+  {id:'ball',label:'Ball gown',note:'A very full skirt. The most dramatic, but heavy and warm to wear for hours.'},
+  {id:'mermaid',label:'Mermaid',note:'Hugs the body to the knee, then flares. Glamorous, but limits walking and dancing.'},
+  {id:'fitflare',label:'Fit and flare',note:'Fitted through the hips, flaring from mid-thigh. Shapely, with more movement than a mermaid.'},
+  {id:'sheath',label:'Sheath',note:'A straight, close line from top to hem. Light and modern; best on a slim or tall frame.'}]},
+ {key:'neckline',label:'Neckline',opts:[
+  {id:'sweetheart',label:'Sweetheart',note:'Curved like the top of a heart. Romantic and great for a fuller bust.'},
+  {id:'vneck',label:'V-neck',note:'Lengthens the neck and torso. Elegant on most body shapes.'},
+  {id:'square',label:'Square',note:'A straight neckline with straps. Clean, regal and a little vintage.'},
+  {id:'offshoulder',label:'Off-shoulder',note:'Sits below the shoulders to show the collarbones. Dreamy, but can slip while dancing.'},
+  {id:'illusion',label:'Illusion high neck',note:'Sheer lace or mesh up to the collarbone over a sweetheart base. Modest and church-friendly.'}]},
+ {key:'sleeves',label:'Sleeves',opts:[
+  {id:'none',label:'None',note:'The coolest option. Pair with a shawl if the church prefers covered shoulders.'},
+  {id:'cap',label:'Cap',note:'Just covers the top of the shoulder. Light coverage, very comfortable.'},
+  {id:'short',label:'Short',note:'Ends above the elbow. Gentle coverage without much warmth.'},
+  {id:'long',label:'Sheer lace long',note:'Graceful and covered, yet breathable if the lace is fine.'},
+  {id:'bolero',label:'Lace bolero',note:'A removable sheer jacket: covered for the ceremony, off for the reception.'}]},
+ {key:'fabric',label:'Fabric',opts:[
+  {id:'chiffon',label:'Chiffon',note:'Light, floaty and the most breathable. Moves beautifully.'},
+  {id:'organza',label:'Silk organza',note:'Crisp and airy with a soft sheen. Holds volume without weight.'},
+  {id:'crepe',label:'Crepe',note:'Matte, smooth and drapey. Modern and comfortable.'},
+  {id:'tulle',label:'Tulle',note:'Soft netting in layers. Romantic, a little warmer when layered.'},
+  {id:'satin',label:'Satin',note:'Glossy and luxurious, but heavier. Best in cooler weather.'}]},
+ {key:'details',label:'Details',multi:true,empty:'No extra details. A clean, minimal gown.',opts:[
+  {id:'lace',label:'Lace bodice',note:'Lace over the bodice and along the hem.'},
+  {id:'beading',label:'Beading',note:'Fine beads that sparkle in the light, densest at the waist.'},
+  {id:'floral',label:'Floral appliqué',note:'Fabric flowers cascading down the skirt.'},
+  {id:'kasavu',label:'Gold border',note:'A woven gold border (zari or kasavu style) at the hem, cuffs and veil edge. Easy to echo on the suit.'}]},
+ {key:'belt',label:'Waist',opts:[
+  {id:'none',label:'No belt',note:'A clean waistline.'},
+  {id:'sash',label:'Satin sash',note:'A soft sash in a deeper tone of the gown.'},
+  {id:'kasavu',label:'Gold belt',note:'A slim gold belt that echoes a gold border.'},
+  {id:'beaded',label:'Beaded belt',note:'A row of crystals or pearls at the waist.'}]},
+ {key:'train',label:'Train',opts:[
+  {id:'none',label:'None',note:'Floor length with no train. Easiest for outdoor weddings.'},
+  {id:'sweep',label:'Sweep',note:'Just brushes the floor behind her. Practical and pretty.'},
+  {id:'chapel',label:'Chapel',note:'About a metre behind. Looks lovely walking down a church aisle.'},
+  {id:'cathedral',label:'Cathedral',note:'Long and dramatic. Needs a bustle for the reception.'}]},
+ {key:'veil',label:'Veil',opts:[
+  {id:'none',label:'None',note:'No veil, perhaps flowers or a comb instead.'},
+  {id:'fingertip',label:'Fingertip',note:'Falls to the fingertips. Easy to wear all day.'},
+  {id:'chapel',label:'Chapel',note:'Reaches the floor. Classic for a church ceremony.'},
+  {id:'cathedral',label:'Cathedral',note:'Extends beyond the train. The most dramatic choice.'}]},
+ {key:'back',label:'Back (not shown in front view)',opts:[
+  {id:'buttons',label:'Covered buttons',note:'A row of fabric-covered buttons down the back. Timeless.'},
+  {id:'open',label:'Open back',note:'A low open back. Cool and striking.'},
+  {id:'laceup',label:'Lace-up',note:'Corset lacing that adjusts the fit on the day.'},
+  {id:'illusionback',label:'Illusion back',note:'Sheer lace panel over the back. Matches an illusion neckline.'}]},
+ {key:'skin',label:'Preview skin tone',noSurprise:true,opts:skinOpts('Only changes the preview, to see how each shade sits against skin.')}
+];
+GOWN_GROUPS[0].noSurprise=true;
+const GOWN_DEFAULT={shade:'ivory',silhouette:'aline',neckline:'illusion',sleeves:'long',fabric:'organza',details:['lace','kasavu'],belt:'kasavu',train:'chapel',veil:'cathedral',back:'buttons',skin:'wheatish',body:'balanced'};
+
+const SIL={
+ aline:{d:'M158 180 L202 180 C222 280 250 400 262 500 Q180 512 98 500 C110 400 138 280 158 180 Z',L:98,R:262,b:512,fy:200},
+ ball:{d:'M158 180 L202 180 C250 200 286 380 292 500 Q180 516 68 500 C74 380 110 200 158 180 Z',L:68,R:292,b:516,fy:196},
+ mermaid:{d:'M158 180 L202 180 C210 215 208 240 204 330 C206 380 240 440 256 500 Q180 512 104 500 C120 440 154 380 156 330 C152 240 150 215 158 180 Z',L:104,R:256,b:512,fy:360},
+ fitflare:{d:'M158 180 L202 180 C212 215 212 250 208 290 C222 360 246 440 258 500 Q180 512 102 500 C114 440 138 360 152 290 C148 250 148 215 158 180 Z',L:102,R:258,b:512,fy:300},
+ sheath:{d:'M158 180 L202 180 C212 215 212 240 208 330 L214 500 Q180 506 146 500 L152 330 C148 240 148 215 158 180 Z',L:146,R:214,b:506,fy:240}
+};
+const FAB={chiffon:{folds:7,layer:true,sheen:0},organza:{folds:5,layer:true,sheen:.18},crepe:{folds:2,layer:false,sheen:0},tulle:{folds:4,layer:true,sheen:0,dots:true},satin:{folds:3,layer:false,sheen:.45}};
+const BODICE={
+ sweetheart:'M146 116 Q148 104 160 104 Q172 104 180 118 Q188 104 200 104 Q212 104 214 116 L202 180 L158 180 Z',
+ vneck:'M146 116 L150 96 L162 94 L180 140 L198 94 L210 96 L214 116 L202 180 L158 180 Z',
+ square:'M146 116 L150 96 L158 95 L160 112 L200 112 L202 95 L210 96 L214 116 L202 180 L158 180 Z',
+ offshoulder:'M133 104 Q180 118 227 104 L228 117 Q221 121 214 121 L202 180 L158 180 L146 121 Q139 121 132 117 Z',
+ illusion:'M146 116 Q148 104 160 104 Q172 104 180 118 Q188 104 200 104 Q212 104 214 116 L202 180 L158 180 Z'
+};
+function gownWarper(b){
+  const bt=[[78,1],[100,b.sh],[125,b.bu],[180,b.wa],[232,b.hi],[340,1+(b.hi-1)*.7],[520,1+(b.hi-1)*.5]];
+  const at=[[100,b.sh],[165,Math.max(b.sh,(b.bu+b.wa)/2)],[228,Math.max(b.hi,b.wa,b.sh)*1.02]];
+  const Y=b.petite?(y=>37+y*.93):(y=>y);
+  const mk=t=>(x,y)=>[180+(x-180)*(t?interp(t,y):1),Y(y)];
+  return {B:mk(bt),A:mk(at),N:mk(null)};
+}
+function renderGown(s,p){
+  const sh=SHADES[s.shade], skin=SKINS[s.skin], sil=SIL[s.silhouette], fab=FAB[s.fabric], det=new Set(s.details);
+  const bt=BODY[s.body]||BODY.balanced, W=gownWarper(bt), out=[]; let mode='raw';
+  const o={push:str=>out.push(mode==='raw'?str:ws(str,W[mode]))};
+  o.push(`<svg viewBox="0 0 380 545" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${sh.label} ${gLab('silhouette',s.silhouette).toLowerCase()} gown"><defs>
+   <pattern id="${p}lace" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.3" fill="none" stroke="${sh.line}" stroke-width=".7"/><circle cx="0" cy="0" r="1" fill="${sh.line}"/><circle cx="8" cy="8" r="1" fill="${sh.line}"/><circle cx="0" cy="8" r="1" fill="${sh.line}"/><circle cx="8" cy="0" r="1" fill="${sh.line}"/></pattern>
+   <pattern id="${p}beads" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".95" fill="${GOLD}"/><circle cx="6.5" cy="6.5" r=".8" fill="#ffffff"/></pattern>
+   <pattern id="${p}tulle" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r=".5" fill="${sh.line}" opacity=".6"/></pattern>
+   <linearGradient id="${p}fg" gradientUnits="userSpaceOnUse" x1="0" y1="170" x2="0" y2="430"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+   <mask id="${p}fade"><rect x="0" y="0" width="380" height="545" fill="url(#${p}fg)"/></mask>
+   <clipPath id="${p}skirt"><path d="${wd(sil.d,W.B)}"/></clipPath>
+  </defs>`);
+  mode='N';
+  const V={fingertip:{y:245,w:62,e:0},chapel:{y:470,w:100,e:20},cathedral:{y:524,w:112,e:70}}[s.veil];
+  if(V){
+    const bx=180+V.w+V.e, by=V.y-4+(V.e?8:0);
+    o.push(`<path d="M168 40 C130 70 ${180-V.w} ${V.y-90} ${180-V.w} ${V.y} Q ${180+V.e/2} ${V.y+14} ${bx} ${by} C ${180+V.w} ${V.y-90} 230 70 192 40 Z" fill="#ffffff" fill-opacity=".3" stroke="${sh.line}" stroke-opacity=".55" stroke-width=".8"/>`);
+    if(det.has('kasavu')) o.push(`<path d="M${180-V.w} ${V.y} Q ${180+V.e/2} ${V.y+14} ${bx} ${by}" fill="none" stroke="${GOLD}" stroke-width="2.4"/>`);
+  }
+  mode='B';
+  const T={sweep:20,chapel:48,cathedral:80}[s.train];
+  if(T) o.push(`<path d="M${sil.R-40} 360 Q ${sil.R+T*.5} 470 ${sil.R+T} 518 Q 180 534 ${sil.L+10} 508 Z" fill="${sh.shade}" stroke="${sh.line}" stroke-width=".8"/>`+(det.has('kasavu')?`<path d="M${sil.R+T} 518 Q 180 534 ${sil.L+10} 508" fill="none" stroke="${GOLD}" stroke-width="3"/>`:''));
+  o.push(`<circle cx="180" cy="31" r="9" fill="#2B1D16"/>
+   <path d="M172 86 L188 86 Q196 94 216 97 Q222 100 220 112 L206 182 L154 182 L140 112 Q138 100 144 97 Q164 94 172 86 Z" fill="${skin}"/>
+   <path d="M172 64 L188 64 L188 92 L172 92 Z" fill="${skin}"/>
+   <circle cx="180" cy="50" r="18" fill="${skin}"/>
+   <path d="M162 50 Q161 30 180 30 Q199 30 198 50 Q194 39 180 38 Q166 39 162 50 Z" fill="#2B1D16"/>`);
+  if(fab.layer) o.push(`<path d="${sil.d}" transform="translate(180 0) scale(1.06 1) translate(-180 0)" fill="${sh.fill}" fill-opacity=".55" stroke="${sh.line}" stroke-opacity=".45" stroke-width=".8"/>`);
+  o.push(`<path d="${sil.d}" fill="${sh.fill}" stroke="${sh.line}" stroke-width="1"/>`);
+  o.push(`<g clip-path="url(#${p}skirt)">`);
+  for(let i=1;i<=fab.folds;i++){const f=i/(fab.folds+1);const x0=166+28*f,x1=sil.L+(sil.R-sil.L)*f;
+    o.push(`<path d="M${x0} ${sil.fy} Q ${(x0+x1)/2+(f-.5)*12} ${(sil.fy+500)/2} ${x1} 506" fill="none" stroke="${sh.line}" stroke-opacity=".45" stroke-width=".9"/>`);}
+  if(fab.sheen) o.push(`<path d="M170 192 C160 300 148 400 136 506" fill="none" stroke="#fff" stroke-opacity="${fab.sheen}" stroke-width="12" stroke-linecap="round"/>`);
+  if(fab.dots) o.push(`<rect x="0" y="180" width="380" height="340" fill="url(#${p}tulle)"/>`);
+  if(det.has('lace')) o.push(`<rect x="0" y="430" width="380" height="90" fill="url(#${p}lace)" opacity=".85"/><path d="M0 430 L380 430" stroke="${sh.line}" stroke-width=".6" stroke-dasharray="2 3"/>`);
+  if(det.has('beading')) o.push(`<rect x="0" y="178" width="380" height="260" fill="url(#${p}beads)" mask="url(#${p}fade)"/>`);
+  if(det.has('kasavu')) o.push(`<path d="M${sil.L} 494 Q 180 ${sil.b-6} ${sil.R} 494" fill="none" stroke="${GOLD}" stroke-width="6"/><path d="M${sil.L} 485 Q 180 ${sil.b-15} ${sil.R} 485" fill="none" stroke="${GOLD}" stroke-width="1.3"/>`);
+  o.push(`</g>`);
+  if(det.has('floral')) [[198,198],[190,228],[204,256],[176,284],[188,320],[166,352],[180,392],[162,430],[186,462]].forEach(([x,y],i)=>{
+    const r=i%3?3.2:4.2; let f='';for(let k=0;k<5;k++){const a=k*1.2566+i;f+=`<circle cx="${(x+Math.cos(a)*r).toFixed(1)}" cy="${(y+Math.sin(a)*r).toFixed(1)}" r="${r*.75}" fill="${sh.fill}" stroke="${sh.line}" stroke-width=".6"/>`;}
+    o.push(f+`<circle cx="${x}" cy="${y}" r="1.4" fill="${GOLD}"/>`);});
+  mode='A';
+  const arm=[[140,104],[130,165],[126,228]];
+  o.push(`<path d="${pts(arm)}" fill="none" stroke="${skin}" stroke-width="${13*bt.sh}" stroke-linecap="round" stroke-linejoin="round"/><path d="${pts(mir(arm))}" fill="none" stroke="${skin}" stroke-width="${13*bt.sh}" stroke-linecap="round" stroke-linejoin="round"/>`);
+  mode='B';
+  const bd=BODICE[s.neckline];
+  o.push(`<path d="${bd}" fill="${sh.fill}" stroke="${sh.line}" stroke-width="1"/>`);
+  if(det.has('lace')) o.push(`<path d="${bd}" fill="url(#${p}lace)" opacity=".8"/>`);
+  if(det.has('beading')) o.push(`<path d="${bd}" fill="url(#${p}beads)" opacity=".9"/>`);
+  if(s.neckline==='illusion'){const il='M172 82 L188 82 Q196 92 216 97 Q221 104 214 116 L200 104 Q188 104 180 118 Q172 104 160 104 L146 116 Q139 104 144 97 Q164 92 172 82 Z';
+    o.push(`<path d="${il}" fill="${sh.fill}" fill-opacity=".38" stroke="${sh.line}" stroke-opacity=".6" stroke-width=".7"/><path d="${il}" fill="url(#${p}lace)" opacity=".7"/><path d="M172 82 L188 82" stroke="${sh.line}" stroke-width="1.6"/>`);}
+  if(s.sleeves!=='none'){
+    mode='A';
+    const start=s.neckline==='offshoulder'?[137,114]:[140,103];
+    const ends={cap:[[136,126]],short:[[133,146]],long:[[130,165],[126.4,221]],bolero:[[130,165],[126.4,221]]}[s.sleeves];
+    const a=[start,...ends]; const sheer=(s.sleeves==='long'||s.sleeves==='bolero');
+    [a,mir(a)].forEach(seg=>{
+      o.push(`<path d="${pts(seg)}" fill="none" stroke="${sh.fill}" stroke-opacity="${sheer?.55:1}" stroke-width="${17*bt.sh}" stroke-linecap="round" stroke-linejoin="round"/>`);
+      if(sheer||det.has('lace')) o.push(`<path d="${pts(seg)}" fill="none" stroke="url(#${p}lace)" stroke-width="${17*bt.sh}" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>`);
+      if(det.has('kasavu')){const e=seg[seg.length-1],q=seg[seg.length-2];const dx=e[0]-q[0],dy=e[1]-q[1],l=Math.hypot(dx,dy);
+        o.push(`<path d="M${(e[0]-dx/l*2).toFixed(1)} ${(e[1]-dy/l*2).toFixed(1)} L${(e[0]+dx/l*2).toFixed(1)} ${(e[1]+dy/l*2).toFixed(1)}" stroke="${GOLD}" stroke-width="${18*bt.sh}" stroke-linecap="butt"/>`);}
+    });
+    mode='B';
+    if(s.sleeves==='bolero'){const bp=[[172,84],[148,95],[143,104],[152,150],[162,128],[167,108]];
+      [bp,mir(bp)].forEach(q=>o.push(`<path d="${pts(q)} Z" fill="${sh.fill}" fill-opacity=".5" stroke="${sh.line}" stroke-width=".7"/><path d="${pts(q)} Z" fill="url(#${p}lace)" opacity=".75"/>`));}
+  }
+  mode='B';
+  const beltD='M157 172 Q180 175 203 172 L202 185 Q180 188 158 185 Z';
+  if(s.belt==='sash') o.push(`<path d="${beltD}" fill="${sh.shade}" stroke="${sh.line}" stroke-width=".8"/><path d="M196 184 L204 214 L198 212 L192 186" fill="${sh.shade}" stroke="${sh.line}" stroke-width=".6"/>`);
+  if(s.belt==='kasavu') o.push(`<path d="${beltD}" fill="${GOLD}"/><path d="M158 178.5 Q180 181.5 202 178.5" fill="none" stroke="${GOLD_D}" stroke-width="1"/>`);
+  if(s.belt==='beaded'){let b='';for(let x=160;x<=200;x+=4)b+=`<circle cx="${x}" cy="${178.5+((x-180)/20)**2*-1.5+1.5}" r="1.9" fill="${x%8?'#ffffff':GOLD}" stroke="${sh.line}" stroke-width=".4"/>`;o.push(b);}
+  if(V) o.push(`<path d="M168 35 Q180 27 192 35" fill="none" stroke="${GOLD}" stroke-width="2.4" stroke-linecap="round"/>`);
+  mode='raw';o.push('</svg>');
+  return out.join('');
+}
+const gLab=(k,id)=>GOWN_GROUPS.find(g=>g.key===k).opts.find(o=>o.id===id)?.label||id;
+
+const PD={
+ shade:{white:'pure white',diamond:'diamond white (soft bright white)',offwhite:'off-white (natural silk tone)',ivory:'ivory (warm cream)',champagne:'champagne (soft golden beige)',blush:'blush (pale pink)'},
+ silhouette:{aline:'an A-line silhouette with a fitted bodice and a skirt that flares gently to the floor',ball:'a ball gown silhouette with a fitted bodice and a very full, voluminous skirt',mermaid:'a mermaid silhouette fitted through the hips and thighs, flaring dramatically below the knee',fitflare:'a fit-and-flare silhouette fitted through the hips and flaring from mid-thigh',sheath:'a sleek sheath (column) silhouette with a straight, close-fitting line to the floor'},
+ neckline:{sweetheart:'a sweetheart neckline',vneck:'a V-neckline with wide straps',square:'a square neckline with straps',offshoulder:'an off-the-shoulder neckline with a band across the upper arms',illusion:'a high illusion neckline of sheer lace mesh up to the collarbone over a sweetheart bodice'},
+ sleeves:{none:'no sleeves',cap:'cap sleeves',short:'short sleeves ending above the elbow',long:'sheer lace long sleeves to the wrist',bolero:'a sheer lace long-sleeved bolero jacket worn over the gown'},
+ fabric:{chiffon:'lightweight, flowing chiffon',organza:'crisp, airy silk organza with a soft sheen',crepe:'smooth matte crepe',tulle:'soft layered tulle',satin:'lustrous satin'},
+ belt:{none:'a clean waistline with no belt',sash:'a satin sash in a slightly deeper tone of the gown',kasavu:'a slim gold belt',beaded:'a beaded belt of pearls and crystals'},
+ train:{none:'floor-length with no train',sweep:'floor-length with a short sweep train',chapel:'floor-length with a chapel-length train',cathedral:'floor-length with a long cathedral-length train'},
+ veil:{none:'no veil, with a small gold hair comb',fingertip:'a sheer fingertip-length veil held by a small gold comb',chapel:'a sheer chapel-length veil held by a small gold comb',cathedral:'a sheer cathedral-length veil extending beyond the train, held by a small gold comb'},
+ back:{buttons:'a row of fabric-covered buttons down the back',open:'an open low back',laceup:'a corset lace-up back',illusionback:'a sheer lace illusion back'}
+};
+function gownSentence(S){
+  const d=[];
+  if(S.details.includes('lace'))d.push('delicate lace appliqué over the bodice and along the hem');
+  if(S.details.includes('beading'))d.push('fine beading and crystals that sparkle, densest at the waist and fading down the skirt');
+  if(S.details.includes('floral'))d.push('three-dimensional fabric flowers cascading diagonally down the skirt');
+  if(S.details.includes('kasavu')){const w=['the hem'];if(S.sleeves!=='none')w.push('the sleeve edges');if(S.veil!=='none')w.push('the veil edge');
+    d.push('a woven gold zari border along '+andList(w));}
+  return `${an(PD.shade[S.shade]).replace(/^./,c=>c.toUpperCase())} wedding gown in ${PD.fabric[S.fabric]}, with ${PD.silhouette[S.silhouette]}. It has ${PD.neckline[S.neckline]} and ${PD.sleeves[S.sleeves]}. ${d.length?'Details: '+d.join('; ')+'.':'The gown is clean and minimal with no embellishment.'} At the waist: ${PD.belt[S.belt]}. The gown is ${PD.train[S.train]}, with ${PD.back[S.back]}. It is worn with ${PD.veil[S.veil]}.`;
+}
+
+/* ---------- suit data ---------- */
+const SUITC={
+ ivory:{label:'Ivory',fill:'#F1E8D4',shade:'#DCCDAA',line:'#A99671',light:true,note:'Warm cream. The classic warm-climate dinner jacket colour.'},
+ champagne:{label:'Champagne',fill:'#E3CDA6',shade:'#C9AE80',line:'#9A815A',light:true,note:'Golden beige. Festive and lovely with gold details.'},
+ sand:{label:'Sand beige',fill:'#CDB894',shade:'#B39C76',line:'#87724F',light:true,note:'Relaxed and earthy. Best with brown shoes.'},
+ dove:{label:'Dove grey',fill:'#BAB9B5',shade:'#9E9D99',line:'#74736F',light:true,note:'Soft and elegant, and cool to wear.'},
+ charcoal:{label:'Charcoal',fill:'#47484D',shade:'#37383C',line:'#222326',note:'Smart and versatile. Frames a light gown well.'},
+ navy:{label:'Midnight navy',fill:'#232C45',shade:'#1A2135',line:'#10152A',note:'Richer than black under evening light. A timeless choice.'},
+ black:{label:'Black',fill:'#1F1F22',shade:'#141416',line:'#050506',note:'The most formal colour. Pure black tie.'},
+ maroon:{label:'Maroon',fill:'#5E1F2A',shade:'#4A1821',line:'#300E15',note:'Deep and regal. Striking with a bandhgala and gold.'},
+ emerald:{label:'Emerald',fill:'#1F4D3E',shade:'#173C30',line:'#0D261E',note:'Bold jewel tone. Beautiful with an ivory or champagne gown.'}
+};
+const BUILD={
+ slim:{label:'Slim',sh:.93,ch:.92,wa:.9,lg:.92,rec:{style:['threepiece','suit'],lapel:['peak'],buttons:['db','one']},note:'Narrow frame. Double-breasted jackets, peak lapels and a waistcoat add presence.'},
+ athletic:{label:'Athletic',sh:1.1,ch:1.06,wa:.95,lg:1.02,rec:{style:['suit','tux'],lapel:['peak','notch'],buttons:['one','two']},note:'Broad shoulders and a trim waist. Most cuts work; peak lapels and a fitted jacket show the shape.'},
+ regular:{label:'Regular',sh:1,ch:1,wa:1,lg:1,rec:{style:['suit','dinner','tux'],lapel:['peak','shawl'],buttons:['one']},note:'Average proportions. Almost any style works.'},
+ broad:{label:'Broad',sh:1.12,ch:1.1,wa:1.05,lg:1.04,rec:{style:['suit','bandhgala'],lapel:['notch','shawl'],buttons:['one','two']},note:'Broad chest and shoulders. Single-breasted jackets and notch lapels keep the look balanced.'},
+ fuller:{label:'Fuller',sh:1.08,ch:1.14,wa:1.22,lg:1.1,rec:{style:['suit','bandhgala','tux'],lapel:['notch','shawl'],buttons:['one']},note:'Fuller through the middle. A one-button jacket and darker colours create a long, clean line.'}
+};
+const ACCENT={gold:{label:'Champagne gold',color:'#CDAA62',d:'champagne-gold'},ivory:{label:'Ivory',color:'#F1E8D4',d:'ivory'},black:{label:'Black',color:'#1F1F22',d:'black'},maroon:{label:'Maroon',color:'#6B2230',d:'deep maroon'},gown:{label:'Gown shade',color:'#F4EBD5',d:'gown'}};
+const SUIT_GROUPS=[
+ {key:'build',label:'Build',noSurprise:true,opts:Object.entries(BUILD).map(([id,v])=>({id,label:v.label,note:v.note}))},
+ {key:'style',label:'Style',opts:[
+  {id:'suit',label:'Two-piece suit',note:'Classic jacket and trousers. Versatile and easy to wear all evening.'},
+  {id:'threepiece',label:'Three-piece',note:'Adds a waistcoat. Very smart, but the extra layer is warm in hot weather.'},
+  {id:'tux',label:'Tuxedo',note:'Black-tie tuxedo with satin lapels and a trouser stripe. The most formal look.'},
+  {id:'dinner',label:'Dinner jacket',note:'A contrast jacket, usually with black trousers and a bow tie. The classic warm-weather evening look.'},
+  {id:'bandhgala',label:'Bandhgala',note:'A closed-collar Indian jacket with a row of buttons. Regal, festive and cooler without a tie.'}]},
+ {key:'color',label:'Jacket colour',opts:Object.entries(SUITC).map(([id,v])=>({id,label:v.label,color:v.fill,note:v.note}))},
+ {key:'trousers',label:'Trousers',opts:[
+  {id:'match',label:'Matching',note:'Same fabric as the jacket.'},
+  {id:'black',label:'Black',note:'Classic with a dinner jacket or tuxedo.'},
+  {id:'ivory',label:'Ivory',note:'Fresh and light. Lovely with a bandhgala.'}]},
+ {key:'lapel',label:'Lapel',opts:[
+  {id:'notch',label:'Notch',note:'The everyday standard. Relaxed and versatile.'},
+  {id:'peak',label:'Peak',note:'Points upward. Sharper and more formal, and it broadens the shoulders.'},
+  {id:'shawl',label:'Shawl',note:'A smooth, rounded lapel. Classic on tuxedos and dinner jackets.'}]},
+ {key:'buttons',label:'Fastening',opts:[
+  {id:'one',label:'One button',note:'Clean and elegant. Best for evening.'},
+  {id:'two',label:'Two buttons',note:'The classic business cut. Slightly less formal.'},
+  {id:'db',label:'Double-breasted',note:'Bold and structured. Flatters slim and athletic builds.'}]},
+ {key:'fabric',label:'Fabric',opts:[
+  {id:'linen',label:'Linen–wool',note:'The coolest choice. Creases a little, which looks relaxed.'},
+  {id:'tropical',label:'Tropical wool',note:'Lightweight and breathable, and holds its shape. The best all-rounder.'},
+  {id:'silkcotton',label:'Silk–cotton',note:'A soft sheen that suits evening and a bandhgala.'},
+  {id:'brocade',label:'Brocade',note:'Woven jacquard with a subtle pattern. Festive, but warmer.'},
+  {id:'velvet',label:'Velvet',note:'Rich and luxurious, but very warm. Best for winter weddings.'}]},
+ {key:'neckwear',label:'Neckwear',opts:[
+  {id:'none',label:'None',note:'Open collar. Relaxed and cooler.'},
+  {id:'tie',label:'Necktie',note:'A silk tie in your accent colour.'},
+  {id:'bow',label:'Bow tie',note:'The black-tie and dinner-jacket classic.'}]},
+ {key:'accent',label:'Accent colour',opts:Object.entries(ACCENT).map(([id,v])=>({id,label:v.label,color:v.color,note:{gold:'Echoes gold details on the gown.',ivory:'Soft and bridal.',black:'Sharp black-tie contrast.',maroon:'A rich festive pop.',gown:'Matches the gown exactly, tying the two looks together.'}[id]}))},
+ {key:'pocket',label:'Pocket square',opts:[
+  {id:'none',label:'None',note:'A clean chest.'},
+  {id:'folded',label:'Silk, accent colour',note:'A folded silk square in your accent colour.'},
+  {id:'kasavu',label:'Gold border',note:'White with a woven gold border. Matches a gold-bordered gown.'}]},
+ {key:'details',label:'Details',multi:true,empty:'No extra details. Clean and classic.',opts:[
+  {id:'piping',label:'Gold piping',note:'Thin gold piping on the lapels or collar.'},
+  {id:'goldbuttons',label:'Gold buttons',note:'Gold buttons catch the light.'},
+  {id:'boutonniere',label:'Boutonniere',note:'A small flower on the lapel, matching the bouquet.'},
+  {id:'brooch',label:'Brooch',note:'A gold brooch on the chest. Traditional with a bandhgala.'}]},
+ {key:'shoes',label:'Shoes',opts:[
+  {id:'oxford',label:'Black oxfords',note:'Formal and classic.'},
+  {id:'loafer',label:'Brown loafers',note:'Relaxed. Best with light suits.'},
+  {id:'mojari',label:'Mojaris',note:'Embroidered slip-ons. Festive, perfect with a bandhgala.'}]},
+ {key:'skin',label:'Preview skin tone',noSurprise:true,opts:skinOpts('Only changes the preview.')}
+];
+const SUIT_DEFAULT={build:'regular',style:'suit',color:'navy',trousers:'match',lapel:'peak',buttons:'one',fabric:'tropical',neckwear:'tie',accent:'gold',pocket:'kasavu',details:['boutonniere'],shoes:'oxford',skin:'wheatish'};
+const sLab=(k,id)=>SUIT_GROUPS.find(g=>g.key===k).opts.find(o=>o.id===id)?.label||id;
+function suitWarper(b){
+  const bt=[[78,1],[100,b.sh],[140,b.ch],[220,b.wa],[282,(b.wa+b.lg)/2],[360,b.lg],[520,b.lg]];
+  const at=[[100,b.sh],[190,Math.max(b.sh,b.ch,b.wa)+.02],[272,Math.max(b.sh,b.ch,b.wa)+.04]];
+  const mk=t=>(x,y)=>[180+(x-180)*(t?interp(t,y):1),y];
+  return {B:mk(bt),A:mk(at),N:mk(null)};
+}
+function accentColor(id){return id==='gown'?SHADES[(window.GOWN?GOWN.get().shade:'ivory')].fill:ACCENT[id].color;}
+function renderSuit(s,p){
+  const c=SUITC[s.color], skin=SKINS[s.skin], bl=BUILD[s.build]||BUILD.regular, W=suitWarper(bl);
+  const out=[]; let mode='raw'; const o={push:str=>out.push(mode==='raw'?str:ws(str,W[mode]))};
+  const bg=s.style==='bandhgala', hem=bg?302:282, det=new Set(s.details);
+  const tr=s.trousers==='match'?c:SUITC[s.trousers], acc=accentColor(s.accent);
+  const vy=s.buttons==='db'?140:s.buttons==='two'?150:168;
+  const jk=`M172 86 L150 92 Q136 95 130 102 L128 122 L137 200 L135 ${hem} L225 ${hem} L223 200 L232 122 L230 102 Q224 95 210 92 L188 86 Z`;
+  const open=`M172 86 L188 86 L180 ${vy} Z`;
+  const btnFill=det.has('goldbuttons')?GOLD:c.line;
+  o.push(`<svg viewBox="0 0 380 545" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${c.label} ${sLab('style',s.style).toLowerCase()}"><defs>
+   <pattern id="${p}linen" width="6" height="4" patternUnits="userSpaceOnUse"><path d="M0 1 L4 1" stroke="${c.light?'#000':'#fff'}" stroke-opacity=".08" stroke-width=".7"/><path d="M2 3 L6 3" stroke="${c.light?'#000':'#fff'}" stroke-opacity=".06" stroke-width=".6"/></pattern>
+   <pattern id="${p}broc" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M6 1 L11 6 L6 11 L1 6 Z" fill="none" stroke="${c.light?c.line:GOLD}" stroke-opacity=".35" stroke-width=".6"/><circle cx="6" cy="6" r=".9" fill="${GOLD}" fill-opacity=".6"/></pattern>
+   <clipPath id="${p}jk"><path d="${wd(jk,W.B)}"/></clipPath>
+   <clipPath id="${p}op"><path d="${wd(open,W.B)}"/></clipPath>
+  </defs>`);
+  mode='B';
+  // trousers
+  const legL='M137 282 L179 282 L177 500 L149 500 Z', legR='M181 282 L223 282 L211 500 L183 500 Z';
+  o.push(`<path d="${legL}" fill="${tr.fill}" stroke="${tr.line}" stroke-width="1"/><path d="${legR}" fill="${tr.fill}" stroke="${tr.line}" stroke-width="1"/>
+   <path d="M158 292 L163 498" stroke="${tr.line}" stroke-opacity=".5" stroke-width=".8"/><path d="M202 292 L197 498" stroke="${tr.line}" stroke-opacity=".5" stroke-width=".8"/>`);
+  if(s.style==='tux') o.push(`<path d="M139 286 L150 498" stroke="#55555E" stroke-width="2.2"/><path d="M221 286 L210 498" stroke="#55555E" stroke-width="2.2"/>`);
+  // shoes
+  const shoe=s.shoes==='oxford'?{f:'#151517',l:'#000'}:s.shoes==='loafer'?{f:'#6B4226',l:'#3F2614'}:{f:'#E8D6AC',l:GOLD_D};
+  const shL='M147 497 L178 497 L179 507 Q170 513 150 512 Q139 511 140 504 Z';
+  o.push(`<path d="${shL}" fill="${shoe.f}" stroke="${shoe.l}" stroke-width=".8"/><path d="${wd(shL,(x,y)=>[m(x),y])}" fill="${shoe.f}" stroke="${shoe.l}" stroke-width=".8"/>`);
+  if(s.shoes==='mojari') o.push(`<path d="M146 503 L170 503" stroke="${GOLD}" stroke-width="2" stroke-dasharray="2 2"/><path d="M214 503 L190 503" stroke="${GOLD}" stroke-width="2" stroke-dasharray="2 2"/>`);
+  // head
+  mode='N';
+  o.push(`<path d="M172 62 L188 62 L188 90 L172 90 Z" fill="${skin}"/><circle cx="180" cy="47" r="19" fill="${skin}"/>
+   <path d="M161 47 Q159 26 180 26 Q201 26 199 47 Q197 35 180 35 Q163 35 161 47 Z" fill="#241812"/>`);
+  // arms
+  mode='A';
+  const arm=[[134,104],[124,190],[120,262]];
+  [arm,mir(arm)].forEach(a=>{const e=a[2],h=[e[0]+(e[0]<180?-.6:.6),e[1]+12];
+    o.push(`<path d="M${e[0]} ${e[1]-2} L${(e[0]+h[0])/2} ${e[1]+5}" stroke="#FAFAF7" stroke-width="${17*bl.sh}" stroke-linecap="butt"/>`);
+    o.push(`<circle cx="${h[0]}" cy="${h[1]}" r="7.5" fill="${skin}"/>`);
+    o.push(`<path d="${pts(a)}" fill="none" stroke="${c.line}" stroke-width="${26*bl.sh}" stroke-linecap="butt" stroke-linejoin="round"/><path d="${pts(a)}" fill="none" stroke="${c.fill}" stroke-width="${24*bl.sh}" stroke-linecap="butt" stroke-linejoin="round"/>`);
+  });
+  // jacket body
+  mode='B';
+  o.push(`<path d="${jk}" fill="${c.fill}" stroke="${c.line}" stroke-width="1"/>`);
+  o.push(`<g clip-path="url(#${p}jk)">`);
+  if(s.fabric==='linen') o.push(`<rect x="0" y="80" width="380" height="240" fill="url(#${p}linen)"/>`);
+  if(s.fabric==='brocade') o.push(`<rect x="0" y="80" width="380" height="240" fill="url(#${p}broc)"/>`);
+  if(s.fabric==='velvet'||s.fabric==='silkcotton') o.push(`<path d="M150 110 C146 170 146 230 150 290" fill="none" stroke="#fff" stroke-opacity="${s.fabric==='velvet'?.14:.1}" stroke-width="16" stroke-linecap="round"/>`);
+  o.push(`</g>`);
+  if(!bg){
+    if(s.style==='threepiece'){
+      o.push(`<path d="${open}" fill="${c.shade}"/><path d="M172 86 L188 86 L180 124 Z" fill="#FAFAF7"/>`);
+      for(let y=132;y<vy-4;y+=10) o.push(`<circle cx="180" cy="${y}" r="1.5" fill="${btnFill}"/>`);
+    } else o.push(`<path d="${open}" fill="#FAFAF7"/>`);
+    o.push(`<path d="M172 84 L165 97 L179 94 Z" fill="#FFFFFF" stroke="#D5D2CA" stroke-width=".6"/><path d="M188 84 L195 97 L181 94 Z" fill="#FFFFFF" stroke="#D5D2CA" stroke-width=".6"/>`);
+    if(s.neckwear==='tie') o.push(`<g clip-path="url(#${p}op)"><path d="M178 100 L182 100 L185 152 L180 160 L175 152 Z" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/></g><path d="M177 93 L183 93 L182 100 L178 100 Z" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/>`);
+    if(s.neckwear==='bow') o.push(`<path d="M180 95 L168 89 L168 101 Z" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/><path d="M180 95 L192 89 L192 101 Z" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/><path d="M177 92 L183 92 L183 98 L177 98 Z" fill="${acc}" stroke="rgba(0,0,0,.3)" stroke-width=".5"/>`);
+    if(s.neckwear==='none') o.push(`<path d="M176 86 L184 86 L180 98 Z" fill="${skin}"/>`);
+    const lapFill=s.style==='tux'?'#141417':c.shade;
+    const lapels={notch:[[172,86],[156,95],[147,121],[155,120],[151,130],[180,vy]],peak:[[172,86],[156,95],[146,116],[138,110],[150,131],[180,vy]]};
+    let Ld, Rd;
+    if(s.lapel==='shawl'){Ld=`M172 86 Q150 98 149 130 Q154 ${vy-12} 180 ${vy} Z`;Rd=`M188 86 Q210 98 211 130 Q206 ${vy-12} 180 ${vy} Z`;}
+    else{Ld=pts(lapels[s.lapel])+' Z';Rd=pts(mir(lapels[s.lapel]))+' Z';}
+    o.push(`<path d="${Ld}" fill="${lapFill}" stroke="${c.line}" stroke-width=".9"/><path d="${Rd}" fill="${lapFill}" stroke="${c.line}" stroke-width=".9"/>`);
+    if(s.style==='tux') o.push(`<path d="M168 92 Q156 110 158 136" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3"/><path d="M192 92 Q204 110 202 136" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="3"/>`);
+    if(det.has('piping')) o.push(`<path d="${Ld}" fill="none" stroke="${GOLD}" stroke-width="1.6"/><path d="${Rd}" fill="none" stroke="${GOLD}" stroke-width="1.6"/>`);
+    if(s.buttons==='db'){
+      o.push(`<path d="M196 ${vy+4} L196 ${hem}" stroke="${c.line}" stroke-width="1"/>`);
+      [[168,152],[192,152],[168,180],[192,180],[168,208],[192,208]].forEach(([x,y])=>o.push(`<circle cx="${x}" cy="${y}" r="2.8" fill="${btnFill}" stroke="${c.line}" stroke-width=".5"/>`));
+    } else {
+      o.push(`<path d="M180 ${vy} L180 ${hem-6} Q181 ${hem-1} 186 ${hem}" fill="none" stroke="${c.line}" stroke-width="1"/>`);
+      (s.buttons==='two'?[vy+5,vy+32]:[vy+5]).forEach(y=>o.push(`<circle cx="180" cy="${y}" r="2.8" fill="${btnFill}" stroke="${c.line}" stroke-width=".5"/>`));
+    }
+  } else {
+    const col='M167 77 L193 77 L194 93 L166 93 Z';
+    o.push(`<path d="${col}" fill="${c.fill}" stroke="${c.line}" stroke-width="1"/><path d="M180 93 L180 ${hem}" stroke="${c.line}" stroke-width="1"/>`);
+    if(det.has('piping')) o.push(`<path d="M167 77 L193 77" stroke="${GOLD}" stroke-width="2"/><path d="M166 93 L194 93" stroke="${GOLD}" stroke-width="1.4"/><path d="M182.5 93 L182.5 ${hem}" stroke="${GOLD}" stroke-width="1.4"/>`);
+    [106,132,158,184,210,236,262].forEach(y=>o.push(`<circle cx="184" cy="${y}" r="2.5" fill="${btnFill}" stroke="${c.line}" stroke-width=".5"/>`));
+  }
+  // pockets
+  o.push(`<path d="M141 236 L166 236 L166 243 L141 243 Z" fill="${c.fill}" stroke="${c.line}" stroke-width=".8"/><path d="M194 236 L219 236 L219 243 L194 243 Z" fill="${c.fill}" stroke="${c.line}" stroke-width=".8"/><path d="M195 133 L215 131" stroke="${c.line}" stroke-width="2"/>`);
+  const sq='M196 132 L199 123 L203 129 L207 121 L211 128 L214 131 Z';
+  if(s.pocket==='folded') o.push(`<path d="${sq}" fill="${acc}" stroke="rgba(0,0,0,.25)" stroke-width=".5"/>`);
+  if(s.pocket==='kasavu') o.push(`<path d="${sq}" fill="#FBFAF6" stroke="#CFC8B6" stroke-width=".5"/><path d="M196.5 130.5 L199 123 L203 129 L207 121 L211 128 L213.5 130" fill="none" stroke="${GOLD}" stroke-width="1.4"/>`);
+  if(det.has('boutonniere')){const fx=bg?204:206, fy=bg?112:108; const pet=s.accent==='gown'?acc:'#FFFFFF';let f=`<path d="M${fx-1} ${fy+4} L${fx-5} ${fy+13}" stroke="#5C7A4A" stroke-width="1.8" stroke-linecap="round"/>`;
+    for(let k=0;k<5;k++){const a=k*1.2566;f+=`<circle cx="${(fx+Math.cos(a)*2.8).toFixed(1)}" cy="${(fy+Math.sin(a)*2.8).toFixed(1)}" r="2.4" fill="${pet}" stroke="#B9B2A2" stroke-width=".4"/>`;}
+    o.push(f+`<circle cx="${fx}" cy="${fy}" r="1.3" fill="${GOLD}"/>`);}
+  if(det.has('brooch')){let b=`<circle cx="${bg?200:202}" cy="${bg?150:150}" r="3.6" fill="${GOLD}" stroke="${GOLD_D}" stroke-width=".6"/>`;
+    for(let k=0;k<6;k++){const a=k*1.047;b+=`<circle cx="${((bg?200:202)+Math.cos(a)*6).toFixed(1)}" cy="${(150+Math.sin(a)*6).toFixed(1)}" r="1.3" fill="#FFFFFF" stroke="${GOLD_D}" stroke-width=".4"/>`;}o.push(b);}
+  mode='raw';o.push('</svg>');
+  return out.join('');
+}
+function suitSentence(S){
+  const c=SUITC[S.color].label.toLowerCase(), bg=S.style==='bandhgala';
+  const accD=S.accent==='gown'?`${PD.shade[GOWN.get().shade].replace(/ \(.*\)/,'')}, matching the gown`:ACCENT[S.accent].d;
+  const parts=[];
+  parts.push({suit:`A tailored ${c} two-piece suit`,threepiece:`A tailored ${c} three-piece suit with a matching waistcoat`,tux:`A ${c} tuxedo with black satin lapels and a satin stripe down the trousers`,dinner:`A ${c} dinner jacket`,bandhgala:`A ${c} bandhgala (a closed mandarin-collar Indian jacket with a row of buttons down the front)`}[S.style]+` in ${{linen:'a breathable linen–wool blend',tropical:'lightweight tropical wool',silkcotton:'silk–cotton with a soft sheen',brocade:'woven jacquard brocade',velvet:'rich velvet'}[S.fabric]}.`);
+  if(!bg) parts.push(`The jacket has ${S.lapel} lapels and is ${{one:'single-breasted with one button',two:'single-breasted with two buttons',db:'double-breasted'}[S.buttons]}, worn over a crisp white shirt${S.neckwear==='none'?' with an open collar':S.neckwear==='tie'?` with ${an(accD)} silk tie`:` with ${an(accD)} bow tie`}.`);
+  parts.push(`Trousers: ${S.trousers==='match'?'matching':S.trousers}.`);
+  const x=[];
+  if(S.pocket==='folded')x.push(`${an(accD)} silk pocket square`);
+  if(S.pocket==='kasavu')x.push('a white pocket square with a woven gold border');
+  if(S.details.includes('piping'))x.push(`thin gold piping on the ${bg?'collar and front edge':'lapels'}`);
+  if(S.details.includes('goldbuttons'))x.push('gold buttons');
+  if(S.details.includes('boutonniere'))x.push(`a small ${S.accent==='gown'?accD.split(',')[0]:'white'} flower boutonniere`);
+  if(S.details.includes('brooch'))x.push('a gold brooch on the chest');
+  if(x.length)parts.push('Details: '+andList(x)+'.');
+  parts.push('Shoes: '+{oxford:'polished black oxfords',loafer:'brown leather loafers',mojari:'embroidered gold mojaris'}[S.shoes]+'.');
+  return parts.join(' ');
+}
+
+/* ---------- checks ---------- */
+function gownScore(s){
+  const C=CLIMATES[PROF.climate].cold; let f={chiffon:5,organza:4,crepe:4,tulle:3,satin:2}[s.fabric], si={sheath:5,aline:4,fitflare:3,mermaid:3,ball:1}[s.silhouette],
+    sl={none:5,cap:4,short:4,bolero:4,long:3}[s.sleeves]; const t={none:5,sweep:4,chapel:3,cathedral:2}[s.train];
+  if(C){f=6-f;sl=6-sl;}
+  const v=f*.4+si*.3+sl*.15+t*.15;
+  return PROF.climate==='mild'?(v+4.6)/2:v;
+}
+function suitScore(s){
+  const C=CLIMATES[PROF.climate].cold; let f={linen:5,tropical:4,silkcotton:4,brocade:2,velvet:1}[s.fabric], st={suit:4,dinner:4,tux:3,bandhgala:4,threepiece:2}[s.style],
+    col=SUITC[s.color].light?5:3, nw=s.neckwear==='none'?5:4;
+  if(C){f=6-f;}
+  const v=f*.45+(C?(s.style==='threepiece'?5:st):st)*.3+(C?4:col)*.15+nw*.1;
+  return PROF.climate==='mild'?(v+4.6)/2:v;
+}
+function comfortHTML(v){const n=Math.round(v), C=CLIMATES[PROF.climate].cold, w=v>=4.2?'Very comfortable':v>=3.4?'Comfortable':v>=2.6?'Some compromise':C?'Too cold':'Too warm';
+  return `<div class="check"><span class="mark" aria-hidden="true">${n}</span><div><strong>Comfort ${PROF.wx&&PROF.wx.place?'in '+esc(PROF.wx.place)+' ('+Math.round(PROF.time==='evening'?PROF.wx.evening_c:PROF.wx.day_high_c)+'°C)':'for '+CLIMATES[PROF.climate].label.toLowerCase()+' weather'}:</strong> <span class="pill">${w}</span><div class="pips" aria-hidden="true">${[1,2,3,4,5].map(i=>`<span class="pip${i<=n?' on':''}"></span>`).join('')}</div></div></div>`;}
+const checkHTML=c=>`<div class="check"><span class="mark${c.ok?'':' w'}" aria-hidden="true">${c.ok?'✓':'!'}</span><div>${c.text}</div></div>`;
+function coordination(G,U){
+  const r=[];
+  const gK=G.details.includes('kasavu')||G.belt==='kasavu', uK=U.pocket==='kasavu'||U.details.includes('piping');
+  if(gK&&uK) r.push({ok:true,text:'<strong>Shared detail:</strong> gold details appear in both outfits, tying them together.'});
+  else if(gK) r.push({ok:false,text:'<strong>Shared detail:</strong> the gown has gold details. Add a gold-bordered pocket square or gold piping to the suit to echo them.'});
+  else if(uK) r.push({ok:false,text:'<strong>Shared detail:</strong> the suit has gold details. A gold border or belt on the gown would link the two.'});
+  else r.push({ok:false,text:'<strong>Shared detail:</strong> nothing links the outfits yet. Try gold details on both, or a suit accent in the gown’s shade.'});
+  const light=SUITC[U.color].light;
+  if(U.color==='ivory'&&['white','diamond'].includes(G.shade)) r.push({ok:false,text:'<strong>Colour:</strong> an ivory jacket next to a bright white gown can make the gown look grey in photos. Choose a darker jacket, or an ivory gown.'});
+  else if(U.color===G.shade) r.push({ok:false,text:'<strong>Colour:</strong> both outfits are the same shade. Add contrast with black trousers, a dark bow tie or dark lapels so the two don’t blend together.'});
+  else if(!light) r.push({ok:true,text:`<strong>Colour:</strong> a ${SUITC[U.color].label.toLowerCase()} jacket frames the ${SHADES[G.shade].label.toLowerCase()} gown beautifully in photos.`});
+  else r.push({ok:true,text:'<strong>Colour:</strong> light tones together give a soft, romantic look. Keep shoes or trousers darker for definition.'});
+  const gF=(G.silhouette==='ball'?2:G.silhouette==='mermaid'?1:0)+(G.train==='cathedral'?2:G.train==='chapel'?1:0)+(G.veil==='cathedral'?1:0)+(G.fabric==='satin'?1:0)+(G.details.includes('beading')?1:0);
+  const uF={tux:3,dinner:3,threepiece:2,bandhgala:2,suit:1}[U.style]+(U.neckwear!=='none'?1:0)+(U.fabric==='linen'?-1:0)+(U.fabric==='velvet'||U.fabric==='brocade'?1:0);
+  if(gF>=4&&uF<=2) r.push({ok:false,text:'<strong>Formality:</strong> the gown is very formal. A tuxedo, dinner jacket or at least a tie would match it.'});
+  else if(gF<=1&&uF>=4) r.push({ok:false,text:'<strong>Formality:</strong> the suit is dressier than the gown. A two-piece suit or an open collar would sit better beside it.'});
+  else r.push({ok:true,text:'<strong>Formality:</strong> both outfits sit at the same level of dressiness.'});
+  if(U.accent==='gown'&&(U.neckwear!=='none'||U.pocket==='folded'||U.details.includes('boutonniere'))) r.push({ok:true,text:'<strong>Accent:</strong> the suit’s accent picks up the gown’s exact shade.'});
+  return r;
+}
+
+/* ---------- studio factory ---------- */
+function makeStudio(cfg){
+  const P=cfg.id, $=id=>document.getElementById(P+'-'+id);
+  let S=Object.assign(clone(cfg.DEFAULT),load(cfg.store+'-current',{}));
+  cfg.groups.forEach(g=>{if(g.multi){if(!Array.isArray(S[g.key]))S[g.key]=clone(cfg.DEFAULT[g.key]);S[g.key]=S[g.key].filter(id=>g.opts.some(o=>o.id===id));}
+    else if(!g.opts.some(o=>o.id===S[g.key]))S[g.key]=cfg.DEFAULT[g.key];});
+  const root=document.getElementById('view-'+P);
+  root.innerHTML=`<div class="wrap">
+   <header class="page-head"><span class="eyebrow">${cfg.eyebrow}</span><h1>${cfg.title}</h1><p class="lede">${cfg.lede}</p></header>
+   <div class="app">
+    <div class="stage"><div class="stage-card"><div class="figure" id="${P}-figure"></div>
+     <div class="stage-meta"><div class="caption" id="${P}-caption"></div><div class="actions"><button class="btn" id="${P}-surprise" type="button">Surprise me</button><button class="btn primary" id="${P}-save" type="button">Save look</button></div></div></div></div>
+    <div class="controls">
+     <div class="controls" id="${P}-groups">${cfg.groups.map(g=>`<section class="group" id="${P}-g-${g.key}" aria-labelledby="${P}-h-${g.key}"><h3 id="${P}-h-${g.key}">${g.label}${g.multi?' <span class="multi-hint">· choose any</span>':''}</h3><p class="note" id="${P}-n-${g.key}"></p><div class="chips" role="group" aria-labelledby="${P}-h-${g.key}">${g.opts.map(o=>`<button type="button" class="chip" id="${P}-c-${g.key}-${o.id}" data-k="${g.key}" data-id="${o.id}" aria-pressed="false">${o.color?`<span class="dot" style="background:${o.color}"></span>`:''}${o.label}</button>`).join('')}</div></section>`).join('')}</div>
+     <section class="card" aria-labelledby="${P}-bH"><h2 id="${P}-bH">Design brief</h2><p class="sub">${cfg.briefSub}</p><div class="checks" id="${P}-checks"></div><dl class="brief" id="${P}-brief"></dl><button class="btn primary" id="${P}-copy" type="button">Copy brief</button><div class="toast" id="${P}-toast" role="status"></div></section>
+     <section class="card" aria-labelledby="${P}-pH"><h2 id="${P}-pH">Image prompt</h2><p class="sub">${cfg.promptSub}</p><h3 class="mini" id="${P}-setH">Setting</h3><div class="chips setchips" role="group" aria-labelledby="${P}-setH" style="margin-top:8px"></div><textarea class="prompt" id="${P}-prompt" readonly rows="14" aria-label="Image generation prompt"></textarea><button class="btn primary" id="${P}-copyp" type="button">Copy prompt</button><div class="toast" id="${P}-toast2" role="status"></div><p class="tip">${cfg.promptTip}</p></section>
+     <section class="card" aria-labelledby="${P}-lH"><h2 id="${P}-lH">Saved looks</h2><p class="sub">Save a few versions and compare them side by side. Tap one to load it.</p><div class="looks" id="${P}-looks"></div></section>
+    </div>
+   </div></div>`;
+  const toast=(el,t)=>{el.textContent=t;clearTimeout(el._t);el._t=setTimeout(()=>el.textContent='',2600);};
+  $('groups').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const k=b.dataset.k,id=b.dataset.id,g=cfg.groups.find(x=>x.key===k);
+    if(g.multi){const set=new Set(S[k]);set.has(id)?set.delete(id):set.add(id);S[k]=[...set];}else S[k]=id;update();});
+  function update(quiet){
+    $('figure').innerHTML=cfg.render(S,P+'m');
+    const recs=cfg.recs(S), off=cfg.off?cfg.off(S):{};
+    cfg.groups.forEach(g=>{
+      const rec=recs[g.key]||[];
+      g.opts.forEach(o=>{const el=$(`c-${g.key}-${o.id}`);el.setAttribute('aria-pressed',g.multi?S[g.key].includes(o.id):S[g.key]===o.id);el.classList.toggle('rec',rec.includes(o.id));});
+      let note=g.multi?(S[g.key].length?S[g.key].map(id=>g.opts.find(o=>o.id===id).note).join(' '):g.empty):g.opts.find(o=>o.id===S[g.key]).note;
+      if(g===cfg.groups[0])note+=' Options marked ✦ below suit this shape.';
+      if(off[g.key])note=off[g.key];
+      $('g-'+g.key).classList.toggle('off',!!off[g.key]);
+      $('n-'+g.key).textContent=note;
+    });
+    $('caption').textContent=cfg.caption(S);
+    $('checks').innerHTML=cfg.checks(S);
+    $('brief').innerHTML=cfg.brief(S).map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('');
+    $('prompt').value=cfg.prompt(S);
+    store(cfg.store+'-current',S);
+    if(!quiet)sync(P);
+  }
+  $('copy').addEventListener('click',()=>{
+    const txt=(typeof cfg.briefTitle==='function'?cfg.briefTitle():cfg.briefTitle)+'\n'+cfg.brief(S).map(([k,v])=>`${k}: ${v}`).join('\n');
+    const fb=()=>{const r=document.createRange();r.selectNodeContents($('brief'));const sel=getSelection();sel.removeAllRanges();sel.addRange(r);toast($('toast'),'Brief selected. Copy it from your menu.');};
+    try{navigator.clipboard.writeText(txt).then(()=>toast($('toast'),'Brief copied'),fb);}catch(e){fb();}
+  });
+  $('copyp').addEventListener('click',()=>copyArea($('prompt'),$('toast2')));
+  $('surprise').addEventListener('click',()=>{
+    cfg.groups.forEach(g=>{if(g.noSurprise)return;
+      if(g.multi)S[g.key]=g.opts.filter(()=>Math.random()<.45).map(o=>o.id);
+      else S[g.key]=g.opts[Math.floor(Math.random()*g.opts.length)].id;});
+    update();
+  });
+  let LOOKS=load(cfg.store+'-looks',[]);if(!Array.isArray(LOOKS))LOOKS=[];
+  let n=LOOKS.reduce((a,l)=>Math.max(a,+((l.name||'').match(/\d+/)||[0])[0]),0);
+  function drawLooks(){
+    $('looks').innerHTML=LOOKS.length?LOOKS.map((l,i)=>`<div class="look"><button type="button" class="load" data-i="${i}" aria-label="Load ${l.name}">${cfg.render(Object.assign(clone(cfg.DEFAULT),l.s),P+'t'+i)}<span>${l.name}</span></button><button type="button" class="rm" data-rm="${i}" aria-label="Remove ${l.name}">×</button></div>`).join('')
+      :`<p class="empty">No saved looks yet. Design ${cfg.noun} and tap Save look.</p>`;
+  }
+  $('looks').addEventListener('click',e=>{const rm=e.target.closest('[data-rm]');if(rm){LOOKS.splice(+rm.dataset.rm,1);store(cfg.store+'-looks',LOOKS);drawLooks();return;}
+    const ld=e.target.closest('.load');if(ld){S=Object.assign(clone(cfg.DEFAULT),clone(LOOKS[+ld.dataset.i].s));update();window.scrollTo({top:0,behavior:'smooth'});}});
+  $('save').addEventListener('click',()=>{
+    if(LOOKS.length>=12){toast($('toast'),'You have 12 saved looks. Remove one to save another.');return;}
+    LOOKS.push({name:'Look '+(++n),s:clone(S)});store(cfg.store+'-looks',LOOKS);drawLooks();toast($('toast'),'Saved as Look '+n);
+  });
+  return {get:()=>S,update,drawLooks};
+}
+function copyArea(ta,t){
+  const ok=m=>{t.textContent=m;clearTimeout(t._t);t._t=setTimeout(()=>t.textContent='',2600);};
+  const fb=()=>{ta.focus();ta.select();ok('Prompt selected. Copy it from your menu.');};
+  try{navigator.clipboard.writeText(ta.value).then(()=>ok('Prompt copied'),fb);}catch(e){fb();}
+}
+const STYLE_LINE='Style: full-length front view, natural standing pose, camera at chest height, sharp focus on the outfit, realistic fabric texture and drape, elegant and natural wedding photography. No text, no watermark.';
+
+window.GOWN=makeStudio({
+  id:'gown',store:'gown',title:'The gown',eyebrow:'Gown studio',noun:'a gown',groups:GOWN_GROUPS,DEFAULT:GOWN_DEFAULT,render:renderGown,
+  lede:'Choose a body type first, then build the gown. The figure updates with every choice, and ✦ marks styles that flatter that shape.',
+  briefSub:'Share this with your designer or boutique.',briefTitle:()=>'Wedding gown brief: '+profileLine(),
+  promptSub:'Paste this into an image generator along with a clear, full-length photo of the person who will wear it. It updates as you change the design.',
+  promptTip:'Tip: if the result changes the face, add “Preserve the face from the reference photo exactly” and try again.',
+  recs:s=>BODY[s.body].rec,
+  caption:s=>`${gLab('shade',s.shade)} · ${gLab('silhouette',s.silhouette)} · ${gLab('fabric',s.fabric)}`,
+  checks:s=>{const cov=['cap','short','long','bolero'].includes(s.sleeves)||s.neckline==='illusion';
+    return comfortHTML(gownScore(s))+checkHTML({ok:cov,text:'<strong>Religious ceremony:</strong> '+(cov?'shoulders covered, suitable for most places of worship.':'shoulders bare. Add a lace bolero or shawl if the venue expects coverage.')});},
+  brief:s=>{const d=s.details.map(id=>gLab('details',id));
+    return [['Body type',BODY[s.body].label],['Shade',gLab('shade',s.shade)],['Silhouette',gLab('silhouette',s.silhouette)],['Neckline',gLab('neckline',s.neckline)+(s.neckline==='illusion'?' (sweetheart base)':'')],
+     ['Sleeves',gLab('sleeves',s.sleeves)],['Fabric',gLab('fabric',s.fabric)],['Details',d.length?d.join(', '):'None'],['Waist',gLab('belt',s.belt)],
+     ['Train',gLab('train',s.train)],['Veil',gLab('veil',s.veil)+(s.veil!=='none'&&s.details.includes('kasavu')?' with kasavu gold edge':'')],['Back',gLab('back',s.back)]];},
+  prompt:s=>`Using the attached reference photo, create a photorealistic full-length image of the same person wearing a wedding gown. Keep their face, facial features, skin tone, hair and body proportions exactly as in the photo, and do not change their identity. They have ${an(BODY[s.body].label.toLowerCase())} figure, and the gown is tailored to fit naturally.\n\nThe gown: ${gownSentence(s)}\n\nSetting: ${settingLine()}.\n\n${STYLE_LINE}`
+});
+window.SUIT=makeStudio({
+  id:'suit',store:'suit',title:'The suit',eyebrow:'Suit studio',noun:'a suit',groups:SUIT_GROUPS,DEFAULT:SUIT_DEFAULT,render:renderSuit,
+  lede:'Start with the build, then choose the style, colour and details. The checks below compare the suit with the gown as you go.',
+  briefSub:'Share this with your tailor.',briefTitle:()=>'Wedding suit brief: '+profileLine(),
+  promptSub:'Paste this into an image generator along with a clear, full-length photo of the person who will wear it.',
+  promptTip:'Tip: if the result changes the face, add “Preserve the face from the reference photo exactly” and try again.',
+  recs:s=>BUILD[s.build].rec,
+  off:s=>s.style==='bandhgala'?{lapel:'A bandhgala has a closed mandarin collar, so there are no lapels.',buttons:'A bandhgala fastens with a single row of buttons.',neckwear:'A bandhgala is worn without a tie.'}:{},
+  caption:s=>`${sLab('color',s.color)} · ${sLab('style',s.style)} · ${sLab('fabric',s.fabric)}`,
+  checks:s=>{const c=coordination(GOWN.get(),s);return comfortHTML(suitScore(s))+c.map(checkHTML).join('')+`<div class="check"><span class="mark" aria-hidden="true">→</span><div><a href="#together">See both outfits together</a></div></div>`;},
+  brief:s=>{const bg=s.style==='bandhgala',d=s.details.map(id=>sLab('details',id));
+    const rows=[['Build',BUILD[s.build].label],['Style',sLab('style',s.style)],['Jacket colour',sLab('color',s.color)],['Trousers',sLab('trousers',s.trousers)]];
+    if(!bg)rows.push(['Lapel',sLab('lapel',s.lapel)],['Fastening',sLab('buttons',s.buttons)]);
+    rows.push(['Fabric',sLab('fabric',s.fabric)]);
+    if(!bg)rows.push(['Neckwear',sLab('neckwear',s.neckwear)+(s.neckwear!=='none'?' in '+sLab('accent',s.accent).toLowerCase():'')]);
+    rows.push(['Pocket square',sLab('pocket',s.pocket)],['Details',d.length?d.join(', '):'None'],['Shoes',sLab('shoes',s.shoes)]);
+    return rows;},
+  prompt:s=>`Using the attached reference photo, create a photorealistic full-length image of the same person wearing a wedding suit. Keep their face, facial features, skin tone, hair and build exactly as in the photo, and do not change their identity. They have ${an(BUILD[s.build].label.toLowerCase())} build, and the outfit is tailored to fit them.\n\nThe outfit: ${suitSentence(s)}\n\nSetting: ${settingLine()}.\n\n${STYLE_LINE}`
+});
+
+/* ---------- together + home ---------- */
+function couplePrompt(){
+  return `Using the two attached reference photos (the first of the person wearing the gown, the second of the person wearing the suit), create a photorealistic full-length photograph of the same couple standing side by side at their wedding. Keep both of their faces, facial features, skin tones, hair and body proportions exactly as in the photos, and do not change their identities. The first has ${an(BODY[GOWN.get().body].label.toLowerCase())} figure and the second has ${an(BUILD[SUIT.get().build].label.toLowerCase())} build; both outfits are tailored to fit them.\n\nThe gown: ${gownSentence(GOWN.get())}\n\nThe suit: ${suitSentence(SUIT.get())}\n\nSetting: ${settingLine()}.\n\nStyle: full-length front view of both, standing close together with natural, relaxed poses, the person in the gown on the left, camera at chest height, sharp focus on both outfits, realistic fabric texture, elegant and natural wedding photography. No text, no watermark.`;
+}
+function drawSettings(){
+  document.querySelectorAll('.setchips').forEach(el=>{el.innerHTML=Object.entries(SETTINGS).map(([id,v])=>`<button type="button" class="chip" data-set="${id}" aria-pressed="${SET===id}">${v.label}</button>`).join('');});
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;SET=b.dataset.set;store('wedding-setting',SET);GOWN.update(true);SUIT.update(true);drawSettings();drawTogether();});
+function pairSVG(pre){return renderGown(GOWN.get(),pre+'g')+renderSuit(SUIT.get(),pre+'s');}
+function drawTogether(){
+  document.getElementById('tog-pair').innerHTML=pairSVG('tg');
+  document.getElementById('tog-caption').textContent=`${gLab('shade',GOWN.get().shade)} ${gLab('silhouette',GOWN.get().silhouette).toLowerCase()} · ${sLab('color',SUIT.get().color)} ${sLab('style',SUIT.get().style).toLowerCase()}`;
+  const c=coordination(GOWN.get(),SUIT.get()), good=c.filter(x=>x.ok).length;
+  document.getElementById('tog-checks').innerHTML=`<p style="margin:0 0 4px"><span class="pill">${good} of ${c.length} looking good</span></p>`+c.map(checkHTML).join('');
+  document.getElementById('tog-prompt').value=couplePrompt();
+  document.getElementById('home-pair').innerHTML=pairSVG('hm');
+}
+document.getElementById('tog-copy').addEventListener('click',()=>copyArea(document.getElementById('tog-prompt'),document.getElementById('tog-toast')));
+function sync(from){if(from==='gown')SUIT.update(true);drawTogether();}
+
+const STEPS=[[16,'Shortlist designers and tailors, and book consultations.'],[14,'Commission the gown with your final design brief.'],[12,'Order the suit and confirm the fabric.'],[8,'First fittings for the gown and the suit.'],[4,'Second fittings. Buy the veil, shoes, pocket square and jewellery.'],[1,'Final fittings and alterations. Collect both outfits.'],[0,'The wedding day.']];
+function drawHome(){
+  const today=new Date();today.setHours(0,0,0,0);
+  const W=weddingDate();
+  const cnt=document.getElementById('count');
+  if(W){const days=Math.round((W-today)/864e5);
+    cnt.innerHTML=days>0?`<strong>${days}</strong> days to go`:days===0?'<strong>Today</strong> is the day':'<strong>Married</strong> congratulations';}
+  else cnt.innerHTML='<button type="button" class="linkbtn" id="addDate">Add your wedding date</button> for a countdown';
+  document.getElementById('tl-lede').textContent=W?`Deadlines worked back from ${fmtDate(W)}. A made-to-order gown takes around 10 to 12 weeks, so the gown leads the schedule.`:'A made-to-order gown takes around 10 to 12 weeks, so start about four months ahead. Add your date above to see exact deadlines.';
+  const dated=STEPS.map(([wk,t])=>[W?new Date(W.getTime()-wk*7*864e5):null,wk,t]);
+  const nextI=W?dated.findIndex(([d])=>d>=today):-2;
+  document.getElementById('timeline').innerHTML=dated.map(([d,wk,t],i)=>{
+    const when=wk===0?(d?fmtDate(d):'Wedding day'):d?'By '+fmtDate(d):`${wk} week${wk>1?'s':''} before`;
+    const cls=nextI===-2?'':i===nextI?'next':(i<nextI||nextI===-1)?'past':'';
+    return `<li class="${cls}"><div class="when">${when}${i===nextI?'<span class="tag">Up next</span>':''}</div><div class="what">${t}</div></li>`;}).join('');
+  const C=CLIMATES[PROF.climate];
+  document.getElementById('wx-lede').textContent=C.lede;
+  document.getElementById('wx').innerHTML=C.notes.map(([h,t])=>`<div class="card"><h3>${h}</h3><p>${t}</p></div>`).join('');
+  document.getElementById('p-time').innerHTML=Object.entries(TIMES).map(([id,v])=>`<button type="button" class="chip" data-time="${id}" aria-pressed="${PROF.time===id}">${v.label}</button>`).join('');
+  document.getElementById('p-clim').innerHTML=Object.entries(CLIMATES).map(([id,v])=>`<button type="button" class="chip" data-clim="${id}" aria-pressed="${PROF.climate===id}">${v.label}</button>`).join('');
+  const di=document.getElementById('p-date'); if(di.value!==PROF.date)di.value=PROF.date;
+  const li=document.getElementById('p-loc'); if(document.activeElement!==li&&li.value!==PROF.location)li.value=PROF.location;
+  document.getElementById('p-ven').innerHTML=Object.entries(VENUES).map(([id,l])=>`<button type="button" class="chip" data-ven="${id}" aria-pressed="${PROF.venue===id}">${l}</button>`).join('');
+  drawWx();
+}
+const esc=t=>String(t??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const cf=c=>`${Math.round(c)}°C / ${Math.round(c*9/5+32)}°F`;
+function drawWx(){
+  const el=document.getElementById('wxcard'), w=PROF.wx;
+  if(!w){el.innerHTML='';return;}
+  const stale=w.forLoc!==PROF.location.trim()||w.forDate!==PROF.date||w.forTime!==PROF.time||w.forVenue!==PROF.venue;
+  const W=weddingDate();
+  const stat=(k,v)=>v==null||v===''?'':`<div class="wx-stat"><span>${k}</span><b>${esc(v)}</b></div>`;
+  const q=encodeURIComponent('weather forecast '+w.place);
+  el.innerHTML=`<div class="card wx">
+    <div class="wx-top"><span class="wx-place">${esc(w.place)}</span><span class="pill">${esc(w.season_note||CLIMATES[w.climate].label)}</span></div>
+    <div class="wx-top"><span class="wx-temp">${Math.round(PROF.time==='evening'?w.evening_c:w.day_high_c)}°C</span><span style="color:var(--muted)">typical ${PROF.time==='evening'?'evening':'daytime'} temperature${W?' around '+fmtDate(W):''}</span></div>
+    <p style="margin:0;max-width:65ch">${esc(w.summary)}</p>
+    <div class="wx-stats">${stat('Daytime high',cf(w.day_high_c))}${stat('Evening',cf(w.evening_c))}${stat('Night low',cf(w.night_low_c))}${stat('Humidity',Math.round(w.humidity_pct)+'%')}${stat('Chance of rain',Math.round(w.rain_chance_pct)+'%')}${stat('Sunset',w.sunset)}</div>
+    <div class="wx-cols"><div><h3>For your outfits</h3><ul>${w.outfit_tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div><div><h3>Good to know</h3><ul>${w.local_notes.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div></div>
+    <div class="wx-foot"><button class="btn" type="button" id="wx-apply">Use suggested fabrics: ${esc(gLab('fabric',w.gown_fabric))} gown, ${esc(sLab('fabric',w.suit_fabric))} suit</button>
+      <span>${stale?'Your details changed since this lookup. Run it again to update.':w.source==='forecast'?'Live forecast for your date from Open-Meteo.':`Average of the last ${w.years||10} years around your date, from Open-Meteo. A live forecast appears here within about two weeks of the day.`}</span>
+      <a href="https://www.google.com/search?q=${q}" target="_blank" rel="noopener">Check the live forecast closer to the day</a></div>
+  </div>`;
+}
+function wxSummary(r){
+  const c={hot:'hot and humid',dry:'warm and fairly dry',mild:'mild',cold:'cold'}[r.climate]||'mild';
+  const rain=r.rain_chance_pct>=45?'Rain is common, so plan a covered option.':r.rain_chance_pct>=20?'Showers are possible.':'Rain is unlikely.';
+  return `${r.source==='forecast'?'The forecast looks':'Usually'} ${c} at this time of year, with daytime highs near ${Math.round(r.day_high_c)}°C and evenings around ${Math.round(r.evening_c??r.day_high_c)}°C. ${rain}`.replace('The forecast looks '+c+' at this time of year','The forecast looks '+c);
+}
+async function lookup(){
+  const st=document.getElementById('p-status'), btn=document.getElementById('p-go');
+  const loc=PROF.location.trim();
+  st.className='lk-status';
+  if(!loc){st.className='lk-status err';st.textContent='Enter a location first.';document.getElementById('p-loc').focus();return;}
+  if(!PROF.date){st.className='lk-status err';st.textContent='Add the wedding date to get weather for that time of year.';document.getElementById('p-date').focus();return;}
+  btn.disabled=true;st.textContent='Looking up weather for your date…';
+  try{
+    const qs=new URLSearchParams({q:loc,date:PROF.date,time:PROF.time,venue:PROF.venue});
+    const res=await fetch('/api/weather?'+qs);
+    const r=await res.json().catch(()=>({}));
+    if(!res.ok){st.className='lk-status err';st.textContent=r.message||'Something went wrong. Please try again.';return;}
+    const num=v=>typeof v==='number'&&isFinite(v)?v:null;
+    if(num(r.day_high_c)==null){st.className='lk-status err';st.textContent='No weather data for that place and date. Please try another nearby town.';return;}
+    const wx={place:String(r.place||loc),summary:wxSummary(r),season_note:String(r.season_note||''),climate:CLIMATES[r.climate]?r.climate:'mild',
+      day_high_c:num(r.day_high_c),evening_c:num(r.evening_c)??num(r.day_high_c),night_low_c:num(r.night_low_c)??num(r.evening_c),humidity_pct:num(r.humidity_pct)??0,rain_chance_pct:num(r.rain_chance_pct)??0,sunset:String(r.sunset||''),
+      outfit_tips:(r.outfit_tips||[]).slice(0,3).map(String),local_notes:(r.local_notes||[]).slice(0,3).map(String),
+      gown_fabric:FAB[r.gown_fabric]?r.gown_fabric:'organza',suit_fabric:['linen','tropical','silkcotton','brocade','velvet'].includes(r.suit_fabric)?r.suit_fabric:'tropical',
+      source:r.source,years:r.years,forLoc:loc,forDate:PROF.date,forTime:PROF.time,forVenue:PROF.venue};
+    PROF.wx=wx;PROF.climate=wx.climate;st.className='lk-status';st.textContent='Updated. Comfort checks now use this weather.';profileChanged();
+  }catch(e){
+    st.className='lk-status err';st.textContent='Couldn’t reach the weather service. Check your connection and try again.';
+  }finally{btn.disabled=false;}
+}
+function profileChanged(){store('wedding-profile',PROF);GOWN.update(true);SUIT.update(true);drawTogether();drawHome();}
+document.getElementById('p-date').addEventListener('change',e=>{PROF.date=e.target.value||'';profileChanged();});
+document.getElementById('p-loc').addEventListener('input',e=>{PROF.location=e.target.value;store('wedding-profile',PROF);});
+document.getElementById('p-loc').addEventListener('change',()=>profileChanged());
+document.getElementById('p-loc').addEventListener('keydown',e=>{if(e.key==='Enter'){PROF.location=e.target.value;lookup();}});
+document.getElementById('p-go').addEventListener('click',lookup);
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-time]');if(t){PROF.time=t.dataset.time;profileChanged();return;}
+  const c=e.target.closest('[data-clim]');if(c){PROF.climate=c.dataset.clim;profileChanged();return;}
+  const v=e.target.closest('[data-ven]');if(v){PROF.venue=v.dataset.ven;profileChanged();return;}
+  if(e.target.closest('#wx-apply')&&PROF.wx){const G=GOWN.get(),U=SUIT.get();G.fabric=PROF.wx.gown_fabric;U.fabric=PROF.wx.suit_fabric;GOWN.update(true);SUIT.update(true);drawTogether();document.getElementById('p-status').textContent='Fabrics updated in both studios.';return;}
+  if(e.target.closest('#addDate')){document.getElementById('your-wedding').scrollIntoView({behavior:'smooth'});document.getElementById('p-date').focus({preventScroll:true});}
+});
+
+/* ---------- routing ---------- */
+const VIEWS=['home','gown','suit','together'];
+function show(v,scroll){
+  if(!VIEWS.includes(v))v='home';
+  document.querySelectorAll('.view').forEach(el=>el.hidden=el.dataset.view!==v);
+  document.querySelectorAll('.links a').forEach(a=>{if(a.dataset.v===v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  if(v==='gown'||v==='suit'){const S=v==='gown'?GOWN:SUIT;S.update(true);S.drawLooks();}
+  if(v==='together'||v==='home')drawTogether();
+  if(scroll!==false)window.scrollTo(0,0);
+}
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const v=a.getAttribute('href').slice(1);if(!VIEWS.includes(v))return;e.preventDefault();try{history.replaceState(null,'','#'+v);}catch(_){}show(v);});
+window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
+const setNav=()=>document.documentElement.style.setProperty('--navh',document.getElementById('nav').offsetHeight+'px');
+window.addEventListener('resize',setNav);
+
+drawSettings();GOWN.update(true);SUIT.update(true);GOWN.drawLooks();SUIT.drawLooks();drawTogether();drawHome();setNav();
+show(location.hash.slice(1),false);
+</script>
+</body>
+</html>
